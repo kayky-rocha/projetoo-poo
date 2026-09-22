@@ -1,46 +1,43 @@
-# Projeto POO
+# Sistema de Gerenciamento de Academia
 
-Projeto desenvolvido para a disciplina de **Programação Orientada a Objetos (POO)**.
+Trabalho da disciplina de Programação Orientada a Objetos — UFVJM (DECOM/FACET).
+
+## Integrantes
+- Kayky Francisco Rodrigues da Rocha
+- Aaron Araujo Agapito Guedes
+
+**Professor:** Eduardo Pelli
 
 ## Sobre o projeto
-
-O projeto tem como objetivo aplicar conceitos de Programação Orientada a Objetos por meio do desenvolvimento de um sistema em Java.
-
-Durante o desenvolvimento serão trabalhados conceitos como:
-
-* Classes e objetos
-* Encapsulamento
-* Herança
-* Polimorfismo
-* Abstração
-* Interfaces
-* Enumerações
-* Relacionamento entre classes
-* Organização e reutilização de código
+Sistema para gerenciamento de uma academia fictícia em Milho Verde-MG, com 4 salas de atividades, lanchonete e loja de materiais. Contempla:
+- Cadastro de clientes
+- Agendamentos (preliminar/confirmado/cancelado)
+- Controle de diárias e mensalidades
+- Gestão de funcionários e administradores
+- Lançamento de despesas e geração de balanço mensal
 
 ## Tecnologias
+- Java 17
+- Maven
 
-* Java
-* Git
-* GitHub
-* Visual Studio Code
-* Apache NetBeans
+## Como rodar
 
-## Estrutura do projeto
+**Via terminal:**
 
-```text
-projeto-poo/
-├── src/
-├── .gitignore
-└── README.md
-```
+mvn compile
+mvn exec:java -Dexec.mainClass="poo.projeto.academia.Main"
 
-## Desenvolvimento
+**Via NetBeans:**
+Abrir o projeto (File → Open Project) e rodar `Main.java` diretamente.
 
-O projeto será desenvolvido de forma incremental, utilizando Git para versionamento do código.
+## Estrutura
 
-## Autor
+src/main/java/poo/projeto/academia/
+├── model/ # Classes de domínio (Pessoa, Cliente, Funcionario, Administrador...)
 
-**Kayky Rocha e Aaron Agapito**
 
-Estudante de Sistemas de Informação — UFVJM
+## Status
+Em desenvolvimento — fase de modelagem das classes de domínio.
+
+## Documentação
+Casos de uso, diagramas de sequência, classes e estados disponíveis na pasta `docs/` (ou onde vocês guardarem os PDFs/LaTeX).
