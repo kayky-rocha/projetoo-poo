@@ -12,7 +12,7 @@ package poo.projeto.academia.model;
  */
 public class Sala {
 
-    /** Número da sala (1 a 4). */
+    /** Numero da sala (1 a 4). */
     private int numero;
 
     /** Tipo de atividade realizada na sala. */

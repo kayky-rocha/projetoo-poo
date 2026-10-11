@@ -1,11 +1,10 @@
 package poo.projeto.academia.model;
 
 /**
- * Cliente da academia, que frequenta as salas de atividades
+ * cliente da academia, que frequenta as salas de atividades
  * e pode comprar na lanchonete e na loja.
  * <p>
- * Além dos dados pessoais herdados de {@link Pessoa}, possui um
- * identificador próprio e o plano contratado.
+ * possui um identificador próprio e o plano contratado.
  *
  * @author Kayky Francisco Rodrigues da Rocha
  * @author Aaron Araujo Agapito Guedes

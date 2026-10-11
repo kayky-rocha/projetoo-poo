@@ -1,4 +1,4 @@
-package poo.projeto.academia.service;
+package poo.projeto.academia.controller;
 
 import java.util.ArrayList;
 import java.util.Objects;

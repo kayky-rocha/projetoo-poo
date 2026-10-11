@@ -15,16 +15,12 @@ public abstract class Pessoa {
 
     /** Nome completo da pessoa. */
     private String nome;
-
     /** CPF da pessoa. */
     private String cpf;
-
     /** Telefone de contato. */
     private String telefone;
-
     /** Endereço de e-mail. */
     private String email;
-
     /** Endereço residencial. Não é obrigatório na criação do objeto. */
     private String endereco;
 
@@ -46,7 +42,6 @@ public abstract class Pessoa {
 
     /**
      * Retorna o nome completo da pessoa.
-     *
      * @return o nome completo
      */
     public String getNome() {
@@ -55,7 +50,6 @@ public abstract class Pessoa {
 
     /**
      * Altera o nome completo da pessoa.
-     *
      * @param nome o novo nome completo
      */
     public void setNome(String nome) {
@@ -64,7 +58,6 @@ public abstract class Pessoa {
 
     /**
      * Retorna o CPF da pessoa.
-     *
      * @return o CPF
      */
     public String getCpf() {
@@ -73,7 +66,6 @@ public abstract class Pessoa {
 
     /**
      * Altera o CPF da pessoa.
-     *
      * @param cpf o novo CPF
      */
     public void setCpf(String cpf) {
@@ -82,7 +74,6 @@ public abstract class Pessoa {
 
     /**
      * Retorna o telefone de contato.
-     *
      * @return o telefone
      */
     public String getTelefone() {
@@ -118,7 +109,6 @@ public abstract class Pessoa {
 
     /**
      * Retorna o endereço residencial.
-     *
      * @return o endereço, ou {@code null} se ainda não tiver sido informado
      */
     public String getEndereco() {
@@ -127,7 +117,6 @@ public abstract class Pessoa {
 
     /**
      * Define ou altera o endereço residencial.
-     *
      * @param endereco o novo endereço
      */
     public void setEndereco(String endereco) {
