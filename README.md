@@ -23,7 +23,6 @@ Sistema para gerenciamento de uma academia fictícia em Milho Verde-MG, com 4 sa
 ## Como rodar
 
 **Via terminal:**
-
 mvn compile
 mvn exec:java -Dexec.mainClass="poo.projeto.academia.Main"
 
