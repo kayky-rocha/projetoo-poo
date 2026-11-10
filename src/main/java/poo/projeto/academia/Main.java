@@ -1,11 +1,18 @@
 package poo.projeto.academia;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import poo.projeto.academia.controller.Agenda;
 import poo.projeto.academia.controller.GerenciarClientes;
 import poo.projeto.academia.controller.acesso.Catraca;
 import poo.projeto.academia.controller.acesso.ResultadoAcesso;
 import poo.projeto.academia.enums.TipoCobranca;
+import poo.projeto.academia.enums.TipoSala;
+import poo.projeto.academia.model.Agendamento;
+import poo.projeto.academia.model.Aula;
 import poo.projeto.academia.model.Cliente;
+import poo.projeto.academia.model.Funcionario;
+import poo.projeto.academia.model.Sala;
 
 /**
  * Ponto de entrada do Sistema de Gerenciamento de Academia.
@@ -22,31 +29,51 @@ public class Main {
     }
 
     /**
-     * Inicia a aplicação. Por enquanto, testa a catraca em quatro cenários.
+     * Inicia a aplicação. Por enquanto, testa a catraca em cinco cenários.
      *
      * @param args argumentos de linha de comando (não utilizados)
      */
     public static void main(String[] args) {
+        LocalDate hoje = LocalDate.now();
+
         GerenciarClientes gerenciarClientes = new GerenciarClientes();
+        Agenda agenda = new Agenda();
+
+        Funcionario instrutor = new Funcionario("Rita", "900", "3390", "rita@email.com", "Rua Z",
+                0, "Instrutora", 2500.0, "rita", "123");
+        Sala sala = new Sala(1, TipoSala.SPINNING, 10);
+        Aula spinning = new Aula(1, "Spinning", sala, instrutor, LocalTime.of(8, 0), 30.0, 150.0);
 
         Cliente emDia = new Cliente("Ana", "111", "3399", "ana@email.com", "Rua A", 0, TipoCobranca.MENSALIDADE);
-        emDia.setDataVencimento(LocalDate.now().plusDays(10));
+        emDia.setDataVencimento(hoje.plusDays(10));
         gerenciarClientes.cadastrarCliente(emDia);
 
         Cliente vencido = new Cliente("Bruno", "222", "3398", "bruno@email.com", "Rua B", 0, TipoCobranca.MENSALIDADE);
-        vencido.setDataVencimento(LocalDate.now().minusDays(3));
+        vencido.setDataVencimento(hoje.minusDays(3));
         gerenciarClientes.cadastrarCliente(vencido);
 
         Cliente diarista = new Cliente("Carla", "333", "3397", "carla@email.com", "Rua C", 0, TipoCobranca.DIARIA);
         gerenciarClientes.cadastrarCliente(diarista);
 
+        Cliente semConfirmar = new Cliente("Eva", "555", "3395", "eva@email.com", "Rua E", 0, TipoCobranca.DIARIA);
+        gerenciarClientes.cadastrarCliente(semConfirmar);
+
         Cliente naoCadastrado = new Cliente("Davi", "444", "3396", "davi@email.com", "Rua D", 99, TipoCobranca.DIARIA);
 
-        Catraca catraca = new Catraca(gerenciarClientes);
+        Agendamento agAna = agenda.agendar(emDia, spinning, hoje);
+        agAna.confirmar();
+
+        Agendamento agCarla = agenda.agendar(diarista, spinning, hoje);
+        agCarla.confirmar();
+
+        agenda.agendar(semConfirmar, spinning, hoje);
+
+        Catraca catraca = new Catraca(gerenciarClientes, agenda);
 
         testar(catraca, emDia);
         testar(catraca, vencido);
         testar(catraca, diarista);
+        testar(catraca, semConfirmar);
         testar(catraca, naoCadastrado);
     }
 
