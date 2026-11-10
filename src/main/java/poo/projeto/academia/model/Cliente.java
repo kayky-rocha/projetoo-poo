@@ -1,10 +1,14 @@
 package poo.projeto.academia.model;
 
+import java.time.LocalDate;
+import poo.projeto.academia.enums.TipoCobranca;
+
 /**
  * cliente da academia, que frequenta as salas de atividades
  * e pode comprar na lanchonete e na loja.
  * <p>
- * possui um identificador próprio e o plano contratado.
+ * possui um identificador próprio, a forma de cobrança contratada
+ * e, para mensalistas, a data de vencimento da mensalidade.
  *
  * @author Kayky Francisco Rodrigues da Rocha
  * @author Aaron Araujo Agapito Guedes
@@ -15,8 +19,11 @@ public class Cliente extends Pessoa {
     /** Identificador único do cliente no sistema. */
     private int id;
 
-    /** Plano contratado pelo cliente (por exemplo, diária ou mensalidade). */
-    private String plano;
+    /** Forma de cobrança contratada (diária ou mensalidade). */
+    private TipoCobranca plano;
+
+    /** Data de vencimento da mensalidade; {@code null} para diaristas. */
+    private LocalDate dataVencimento;
 
     /**
      * Cria um cliente com dados pessoais, identificador e plano.
@@ -27,9 +34,9 @@ public class Cliente extends Pessoa {
      * @param email    endereço de e-mail
      * @param endereco endereço residencial
      * @param id       identificador único do cliente
-     * @param plano    plano contratado
+     * @param plano    forma de cobrança contratada
      */
-    public Cliente(String nome, String cpf, String telefone, String email, String endereco, int id, String plano) {
+    public Cliente(String nome, String cpf, String telefone, String email, String endereco, int id, TipoCobranca plano) {
         super(nome, cpf, telefone, email);
         super.setEndereco(endereco);
         this.id = id;
@@ -55,20 +62,38 @@ public class Cliente extends Pessoa {
     }
 
     /**
-     * Retorna o plano contratado pelo cliente.
+     * Retorna a forma de cobrança contratada.
      *
      * @return o plano
      */
-    public String getPlano() {
+    public TipoCobranca getPlano() {
         return plano;
     }
 
     /**
-     * Altera o plano contratado pelo cliente.
+     * Altera a forma de cobrança contratada.
      *
      * @param plano o novo plano
      */
-    public void setPlano(String plano) {
+    public void setPlano(TipoCobranca plano) {
         this.plano = plano;
+    }
+
+    /**
+     * Retorna a data de vencimento da mensalidade.
+     *
+     * @return a data de vencimento, ou {@code null} se não houver
+     */
+    public LocalDate getDataVencimento() {
+        return dataVencimento;
+    }
+
+    /**
+     * Altera a data de vencimento da mensalidade.
+     *
+     * @param dataVencimento a nova data de vencimento
+     */
+    public void setDataVencimento(LocalDate dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
 }

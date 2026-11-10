@@ -18,6 +18,14 @@ public abstract class ValidadorAcesso {
     private ValidadorAcesso proximo;
 
     /**
+     * Cria um elo sem próximo. O próximo é ligado depois com
+     * {@link #definirProximo}.
+     */
+    public ValidadorAcesso() {
+        this.proximo = null;
+    }
+
+    /**
      * Define o próximo elo da cadeia.
      * <p>
      * Retorna o elo recebido para permitir montar a cadeia em sequência:

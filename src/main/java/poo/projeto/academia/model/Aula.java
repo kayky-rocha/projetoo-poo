@@ -1,9 +1,8 @@
 package poo.projeto.academia.model;
 
-import java.time.LocalTime;
-
 import poo.projeto.academia.enums.TipoCobranca;
 import poo.projeto.academia.enums.TipoSala;
+import java.time.LocalTime;
 
 /**
  * Aula oferecida pela academia em uma das salas, em um horário fixo,
