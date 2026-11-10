@@ -1,4 +1,4 @@
-package poo.projeto.academia.model;
+package poo.projeto.academia.enums;
 
 /**
  * As formas de cobrança: por dia (diária) ou por mês (mensalidade).

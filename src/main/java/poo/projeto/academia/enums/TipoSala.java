@@ -1,4 +1,4 @@
-package poo.projeto.academia.model;
+package poo.projeto.academia.enums;
 
 /**
  * Os tipos de sala que a academia tem.

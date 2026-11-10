@@ -1,5 +1,7 @@
 package poo.projeto.academia.model;
 
+import poo.projeto.academia.enums.TipoSala;
+
 /**
  * Sala de exercícios da academia.
  * <p>
