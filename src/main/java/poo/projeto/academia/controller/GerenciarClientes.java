@@ -48,7 +48,10 @@ public class GerenciarClientes {
     }
 
     /**
-     * Substitui os dados de um cliente existente, mantendo o seu id.
+     * Atualiza os dados de um cliente existente.
+     * <p>
+     * Altera o próprio objeto cadastrado, mantendo o id e o histórico
+     * de pagamentos.
      *
      * @param id         id do cliente a editar
      * @param novosDados cliente com os dados atualizados
@@ -63,8 +66,13 @@ public class GerenciarClientes {
         if (cpfEmUso(novosDados.getCpf(), id)) {
             throw new IllegalArgumentException("CPF já cadastrado.");
         }
-        novosDados.setId(id);
-        clientes.set(indice, novosDados);
+        Cliente existente = clientes.get(indice);
+        existente.setNome(novosDados.getNome());
+        existente.setCpf(novosDados.getCpf());
+        existente.setTelefone(novosDados.getTelefone());
+        existente.setEmail(novosDados.getEmail());
+        existente.setEndereco(novosDados.getEndereco());
+        existente.setPlano(novosDados.getPlano());
         return true;
     }
 
