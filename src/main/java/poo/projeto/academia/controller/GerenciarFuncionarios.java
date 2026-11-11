@@ -64,8 +64,16 @@ public class GerenciarFuncionarios {
         if (usuarioEmUso(novosDados.getUsuario(), id)) {
             throw new IllegalArgumentException("Usuário já cadastrado.");
         }
-        novosDados.setId(id);
-        funcionarios.set(indice, novosDados);
+        Funcionario existente = funcionarios.get(indice);
+        existente.setNome(novosDados.getNome());
+        existente.setUsuario(novosDados.getUsuario());
+        existente.setSenha(novosDados.getSenha());
+        existente.setCargo(novosDados.getCargo());
+        existente.setSalario(novosDados.getSalario());
+        existente.setCpf(novosDados.getCpf());
+        existente.setTelefone(novosDados.getTelefone());
+        existente.setEmail(novosDados.getEmail());
+        existente.setEndereco(novosDados.getEndereco());
         return true;
     }
 
