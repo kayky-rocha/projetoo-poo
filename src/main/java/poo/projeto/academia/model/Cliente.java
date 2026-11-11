@@ -1,6 +1,6 @@
 package poo.projeto.academia.model;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import poo.projeto.academia.enums.TipoCobranca;
 
 /**
@@ -22,8 +22,8 @@ public class Cliente extends Pessoa {
     /** Forma de cobrança contratada (diária ou mensalidade). */
     private TipoCobranca plano;
 
-    /** Data de vencimento da mensalidade; {@code null} para diaristas. */
-    private LocalDate dataVencimento;
+    /** Lista de pagamentos realizados pelo cliente. */
+    private ArrayList<Pagamento> pagamentos = new ArrayList<>();
 
     /**
      * Cria um cliente com dados pessoais, identificador e plano.
@@ -80,20 +80,44 @@ public class Cliente extends Pessoa {
     }
 
     /**
-     * Retorna a data de vencimento da mensalidade.
+     * Registra um pagamento no histórico do cliente.
      *
-     * @return a data de vencimento, ou {@code null} se não houver
+     * @param pagamento pagamento a registrar
+     * @throws IllegalArgumentException se for nulo ou pertencer a outro cliente
      */
-    public LocalDate getDataVencimento() {
-        return dataVencimento;
+    public void registrarPagamento(Pagamento pagamento) {
+        if (pagamento == null) {
+            throw new IllegalArgumentException("Pagamento não pode ser nulo.");
+        }
+        if (pagamento.getCliente() != this) {
+            throw new IllegalArgumentException("Pagamento pertence a outro cliente.");
+        }
+        pagamentos.add(pagamento);
+        }
+
+     /**
+     * Retorna o histórico de pagamentos do cliente.
+     *
+     * @return cópia da lista de pagamentos
+     */
+    public ArrayList<Pagamento> getPagamentos(){
+        return new ArrayList<>(pagamentos);
     }
 
-    /**
-     * Altera a data de vencimento da mensalidade.
+     /**
+     * Busca o pagamento mais recente de uma forma de cobrança.
      *
-     * @param dataVencimento a nova data de vencimento
+     * @param tipo forma de cobrança a filtrar
+     * @return o pagamento mais recente daquele tipo, ou {@code null} se não houver
      */
-    public void setDataVencimento(LocalDate dataVencimento) {
-        this.dataVencimento = dataVencimento;
+    public Pagamento ultimoPagamento(TipoCobranca tipo) {
+        Pagamento ultimo = null;
+        for (Pagamento p : pagamentos) {
+            if (p.getTipoCobranca() == tipo
+                && (ultimo == null || p.getDataPagamento().isAfter(ultimo.getDataPagamento()))) {
+                    ultimo = p;
+            }
+        }
+        return ultimo;
     }
-}
+ }

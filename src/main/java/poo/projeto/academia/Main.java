@@ -7,11 +7,13 @@ import poo.projeto.academia.controller.GerenciarClientes;
 import poo.projeto.academia.controller.acesso.Catraca;
 import poo.projeto.academia.controller.acesso.ResultadoAcesso;
 import poo.projeto.academia.enums.TipoCobranca;
+import poo.projeto.academia.enums.TipoPagamento;
 import poo.projeto.academia.enums.TipoSala;
 import poo.projeto.academia.model.Agendamento;
 import poo.projeto.academia.model.Aula;
 import poo.projeto.academia.model.Cliente;
 import poo.projeto.academia.model.Funcionario;
+import poo.projeto.academia.model.Pagamento;
 import poo.projeto.academia.model.Sala;
 
 /**
@@ -29,7 +31,7 @@ public class Main {
     }
 
     /**
-     * Inicia a aplicação. Por enquanto, testa a catraca em cinco cenários.
+     * Inicia a aplicação. Por enquanto, testa a catraca em seis cenários.
      *
      * @param args argumentos de linha de comando (não utilizados)
      */
@@ -45,12 +47,15 @@ public class Main {
         Aula spinning = new Aula(1, "Spinning", sala, instrutor, LocalTime.of(8, 0), 30.0, 150.0);
 
         Cliente emDia = new Cliente("Ana", "111", "3399", "ana@email.com", "Rua A", 0, TipoCobranca.MENSALIDADE);
-        emDia.setDataVencimento(hoje.plusDays(10));
         gerenciarClientes.cadastrarCliente(emDia);
+        pagarMensalidade(emDia, hoje.minusDays(10));
 
         Cliente vencido = new Cliente("Bruno", "222", "3398", "bruno@email.com", "Rua B", 0, TipoCobranca.MENSALIDADE);
-        vencido.setDataVencimento(hoje.minusDays(3));
         gerenciarClientes.cadastrarCliente(vencido);
+        pagarMensalidade(vencido, hoje.minusMonths(2));
+
+        Cliente semPagamento = new Cliente("Fábio", "666", "3394", "fabio@email.com", "Rua F", 0, TipoCobranca.MENSALIDADE);
+        gerenciarClientes.cadastrarCliente(semPagamento);
 
         Cliente diarista = new Cliente("Carla", "333", "3397", "carla@email.com", "Rua C", 0, TipoCobranca.DIARIA);
         gerenciarClientes.cadastrarCliente(diarista);
@@ -72,9 +77,22 @@ public class Main {
 
         testar(catraca, emDia);
         testar(catraca, vencido);
+        testar(catraca, semPagamento);
         testar(catraca, diarista);
         testar(catraca, semConfirmar);
         testar(catraca, naoCadastrado);
+    }
+
+    /**
+     * Registra no cliente um pagamento de mensalidade.
+     *
+     * @param cliente       cliente que paga
+     * @param dataPagamento data em que a mensalidade foi paga
+     */
+    private static void pagarMensalidade(Cliente cliente, LocalDate dataPagamento) {
+        Pagamento pagamento = new Pagamento(cliente, TipoPagamento.PIX,
+                TipoCobranca.MENSALIDADE, 150.0, dataPagamento);
+        cliente.registrarPagamento(pagamento);
     }
 
     /**
