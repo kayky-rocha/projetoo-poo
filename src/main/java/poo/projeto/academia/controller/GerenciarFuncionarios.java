@@ -49,7 +49,11 @@ public class GerenciarFuncionarios {
     }
 
     /**
-     * Substitui os dados de um funcionário, mantendo o seu id.
+     * Atualiza os dados de um funcionário já cadastrado.
+     * <p>
+     * Os campos são copiados para o objeto existente, que mantém o seu id
+     * e a mesma referência. Assim, quem já guarda esse funcionário (como
+     * a {@code Aula}, que o usa de instrutor) passa a ver os dados novos.
      *
      * @param id         id do funcionário a editar
      * @param novosDados funcionário com os dados atualizados
@@ -105,6 +109,20 @@ public class GerenciarFuncionarios {
             }
         }
         return null;
+    }
+
+    /**
+     * Busca um funcionário pelo id.
+     *
+     * @param id id do funcionário
+     * @return o funcionário, ou {@code null} se não existir
+     */
+    public Funcionario buscarFuncionarioPorId(int id) {
+        int indice = indiceDe(id);
+        if (indice == -1) {
+            return null;
+        }
+        return funcionarios.get(indice);
     }
 
     /**
