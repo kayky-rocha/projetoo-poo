@@ -5,6 +5,8 @@ import java.time.LocalTime;
 import poo.projeto.academia.controller.Agenda;
 import poo.projeto.academia.controller.GerenciarClientes;
 import poo.projeto.academia.controller.acesso.Catraca;
+import poo.projeto.academia.controller.acesso.ConfigurarAcesso;
+import poo.projeto.academia.controller.acesso.ValidadorAcesso;
 import poo.projeto.academia.controller.acesso.ResultadoAcesso;
 import poo.projeto.academia.enums.TipoCobranca;
 import poo.projeto.academia.enums.TipoPagamento;
@@ -73,7 +75,8 @@ public class Main {
 
         agenda.agendar(semConfirmar, spinning, hoje);
 
-        Catraca catraca = new Catraca(gerenciarClientes, agenda);
+        ValidadorAcesso cadeia = ConfigurarAcesso.montarCadeiaEntrada(gerenciarClientes, agenda);
+        Catraca catraca = new Catraca(cadeia);
 
         testar(catraca, emDia);
         testar(catraca, vencido);
