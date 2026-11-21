@@ -35,14 +35,14 @@ public class Pagamento {
      *
      * @param cliente       cliente que realizou o pagamento
      * @param tipoPagamento forma de pagamento utilizada
-     * @param tipoCobranca  forma de cobrança aplicada
+     * @param tipoPlano  plano aplicado (diária ou mensalidade)
      * @param valorPago     valor pago pelo cliente
      * @param dataPagamento data em que o pagamento foi realizado
      */
-    public Pagamento(Cliente cliente, TipoPagamento tipoPagamento, TipoPlano tipoCobranca, double valorPago, LocalDate dataPagamento) {
+    public Pagamento(Cliente cliente, TipoPagamento tipoPagamento, TipoPlano tipoPlano, double valorPago, LocalDate dataPagamento) {
         this.cliente = cliente;
         this.tipoPagamento = tipoPagamento;
-        this.tipoPlano = tipoCobranca;
+        this.tipoPlano = tipoPlano;
         this.valorPago = valorPago;
         this.dataPagamento = dataPagamento;
         
