@@ -9,6 +9,7 @@ import poo.projeto.academia.controller.acesso.ConfigurarAcesso;
 import poo.projeto.academia.controller.acesso.ValidadorAcesso;
 import poo.projeto.academia.controller.acesso.ResultadoAcesso;
 import poo.projeto.academia.enums.TipoPlano;
+import poo.projeto.academia.enums.OrigemPagamento;
 import poo.projeto.academia.enums.TipoPagamento;
 import poo.projeto.academia.enums.TipoSala;
 import poo.projeto.academia.model.Agendamento;
@@ -94,7 +95,7 @@ public class Main {
      */
     private static void pagarMensalidade(Cliente cliente, LocalDate dataPagamento) {
         Pagamento pagamento = new Pagamento(cliente, TipoPagamento.PIX,
-                TipoPlano.MENSALIDADE, 150.0, dataPagamento);
+                OrigemPagamento.MENSALIDADE, 150.0, dataPagamento);
         cliente.registrarPagamento(pagamento);
     }
 
