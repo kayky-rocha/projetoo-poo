@@ -1,5 +1,6 @@
 package poo.projeto.academia.controller.acesso;
 
+import poo.projeto.academia.controller.Agenda;
 import poo.projeto.academia.controller.GerenciarClientes;
 
 
@@ -34,5 +35,22 @@ public class ConfigurarAcesso {
         cadastro.definirProximo(mensalidade).definirProximo(diaria);
         return cadastro;
     }
-    
+
+    /**
+     * Monta a cadeia da entrada em uma aula: cadastro e agendamento.
+     * <p>
+     * Vale para todos os clientes, inclusive o mensalista: só entra na
+     * aula quem tem agendamento confirmado nela no dia.
+     *
+     * @param gerenciarClientes gerenciador usado para conferir o cadastro
+     * @param agenda            agenda usada para conferir o agendamento
+     * @return o primeiro elo da cadeia
+     */
+    public static ValidadorAcesso montarCadeiaAula(GerenciarClientes gerenciarClientes, Agenda agenda) {
+        ValidadorAcesso cadastro = new ValidadorCadastro(gerenciarClientes);
+        ValidadorAcesso agendamento = new ValidadorAgendamento(agenda);
+
+        cadastro.definirProximo(agendamento);
+        return cadastro;
+    }
 }

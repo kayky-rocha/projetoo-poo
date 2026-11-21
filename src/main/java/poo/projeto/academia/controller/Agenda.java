@@ -155,14 +155,28 @@ public class Agenda {
      * @return {@code true} se tiver agendamento confirmado nessa aula nesse dia
      */
     public boolean temAgendamentoConfirmado(Cliente cliente, Aula aula, LocalDate data) {
+        return buscarAgendamentoConfirmado(cliente, aula, data) != null;
+    }
+
+    /**
+     * Busca o agendamento confirmado do cliente em uma aula na data.
+     * <p>
+     * Usado pela catraca da aula para marcar o agendamento como realizado.
+     *
+     * @param cliente cliente procurado
+     * @param aula    aula procurada
+     * @param data    dia a verificar
+     * @return o agendamento confirmado, ou {@code null} se não houver
+     */
+    public Agendamento buscarAgendamentoConfirmado(Cliente cliente, Aula aula, LocalDate data) {
         for (Agendamento a : listarPorCliente(cliente)) {
             if (a.getAula().getCodigo() == aula.getCodigo()
                     && a.getData().equals(data)
                     && a.getStatus() == StatusAgendamento.CONFIRMADO) {
-                return true;
+                return a;
             }
         }
-        return false;
+        return null;
     }
 
     /**
