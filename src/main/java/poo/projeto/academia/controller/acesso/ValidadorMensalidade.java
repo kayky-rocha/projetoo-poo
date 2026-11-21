@@ -1,7 +1,7 @@
 package poo.projeto.academia.controller.acesso;
 
 import java.time.LocalDate;
-import poo.projeto.academia.enums.TipoCobranca;
+import poo.projeto.academia.enums.TipoPlano;
 import poo.projeto.academia.model.Cliente;
 import poo.projeto.academia.model.Pagamento;
 
@@ -36,11 +36,11 @@ public class ValidadorMensalidade extends ValidadorAcesso {
     protected ResultadoAcesso verificar(SolicitacaoAcesso solicitacao) {
         Cliente cliente = solicitacao.getCliente();
 
-        if (cliente.getPlano() != TipoCobranca.MENSALIDADE) {
+        if (cliente.getPlano() != TipoPlano.MENSALIDADE) {
             return new ResultadoAcesso(true, "Acesso liberado.");
         }
 
-        Pagamento ultimo = cliente.ultimoPagamento(TipoCobranca.MENSALIDADE);
+        Pagamento ultimo = cliente.ultimoPagamento(TipoPlano.MENSALIDADE);
 
         if (ultimo == null) {
             return new ResultadoAcesso(false, "Mensalidade não paga.");

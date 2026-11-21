@@ -1,6 +1,6 @@
 package poo.projeto.academia.model;
 
-import poo.projeto.academia.enums.TipoCobranca;
+import poo.projeto.academia.enums.TipoPlano;
 import poo.projeto.academia.enums.TipoPagamento;
 import java.time.LocalDate;
 
@@ -22,7 +22,7 @@ public class Pagamento {
     private TipoPagamento tipoPagamento;
 
     /** Forma de cobrança aplicada. */
-    private TipoCobranca tipoCobranca;
+    private TipoPlano tipoCobranca;
 
     /** Valor pago pelo cliente. */
     private double valorPago;
@@ -39,7 +39,7 @@ public class Pagamento {
      * @param valorPago     valor pago pelo cliente
      * @param dataPagamento data em que o pagamento foi realizado
      */
-    public Pagamento(Cliente cliente, TipoPagamento tipoPagamento, TipoCobranca tipoCobranca, double valorPago, LocalDate dataPagamento) {
+    public Pagamento(Cliente cliente, TipoPagamento tipoPagamento, TipoPlano tipoCobranca, double valorPago, LocalDate dataPagamento) {
         this.cliente = cliente;
         this.tipoPagamento = tipoPagamento;
         this.tipoCobranca = tipoCobranca;
@@ -71,7 +71,7 @@ public class Pagamento {
      *
      * @return a forma de cobrança
      */
-    public TipoCobranca getTipoCobranca() {
+    public TipoPlano getTipoCobranca() {
         return tipoCobranca;
     }
 
@@ -99,7 +99,7 @@ public class Pagamento {
     * @return um mês após o pagamento se for mensalidade; {@code null} se for diária
     */
     public LocalDate calcularVencimento(){
-        if (tipoCobranca == TipoCobranca.MENSALIDADE) {
+        if (tipoCobranca == TipoPlano.MENSALIDADE) {
             return dataPagamento.plusMonths(1);
         }
         return null;

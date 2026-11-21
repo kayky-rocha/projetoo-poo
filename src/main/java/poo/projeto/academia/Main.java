@@ -8,7 +8,7 @@ import poo.projeto.academia.controller.acesso.Catraca;
 import poo.projeto.academia.controller.acesso.ConfigurarAcesso;
 import poo.projeto.academia.controller.acesso.ValidadorAcesso;
 import poo.projeto.academia.controller.acesso.ResultadoAcesso;
-import poo.projeto.academia.enums.TipoCobranca;
+import poo.projeto.academia.enums.TipoPlano;
 import poo.projeto.academia.enums.TipoPagamento;
 import poo.projeto.academia.enums.TipoSala;
 import poo.projeto.academia.model.Agendamento;
@@ -48,24 +48,24 @@ public class Main {
         Sala sala = new Sala(1, TipoSala.SPINNING, 10);
         Aula spinning = new Aula(1, "Spinning", sala, instrutor, LocalTime.of(8, 0), 30.0, 150.0);
 
-        Cliente emDia = new Cliente("Ana", "111", "3399", "ana@email.com", "Rua A", 0, TipoCobranca.MENSALIDADE);
+        Cliente emDia = new Cliente("Ana", "111", "3399", "ana@email.com", "Rua A", 0, TipoPlano.MENSALIDADE);
         gerenciarClientes.cadastrarCliente(emDia);
         pagarMensalidade(emDia, hoje.minusDays(10));
 
-        Cliente vencido = new Cliente("Bruno", "222", "3398", "bruno@email.com", "Rua B", 0, TipoCobranca.MENSALIDADE);
+        Cliente vencido = new Cliente("Bruno", "222", "3398", "bruno@email.com", "Rua B", 0, TipoPlano.MENSALIDADE);
         gerenciarClientes.cadastrarCliente(vencido);
         pagarMensalidade(vencido, hoje.minusMonths(2));
 
-        Cliente semPagamento = new Cliente("Fábio", "666", "3394", "fabio@email.com", "Rua F", 0, TipoCobranca.MENSALIDADE);
+        Cliente semPagamento = new Cliente("Fábio", "666", "3394", "fabio@email.com", "Rua F", 0, TipoPlano.MENSALIDADE);
         gerenciarClientes.cadastrarCliente(semPagamento);
 
-        Cliente diarista = new Cliente("Carla", "333", "3397", "carla@email.com", "Rua C", 0, TipoCobranca.DIARIA);
+        Cliente diarista = new Cliente("Carla", "333", "3397", "carla@email.com", "Rua C", 0, TipoPlano.DIARIA);
         gerenciarClientes.cadastrarCliente(diarista);
 
-        Cliente semConfirmar = new Cliente("Eva", "555", "3395", "eva@email.com", "Rua E", 0, TipoCobranca.DIARIA);
+        Cliente semConfirmar = new Cliente("Eva", "555", "3395", "eva@email.com", "Rua E", 0, TipoPlano.DIARIA);
         gerenciarClientes.cadastrarCliente(semConfirmar);
 
-        Cliente naoCadastrado = new Cliente("Davi", "444", "3396", "davi@email.com", "Rua D", 99, TipoCobranca.DIARIA);
+        Cliente naoCadastrado = new Cliente("Davi", "444", "3396", "davi@email.com", "Rua D", 99, TipoPlano.DIARIA);
 
         Agendamento agAna = agenda.agendar(emDia, spinning, hoje);
         agAna.confirmar();
@@ -94,7 +94,7 @@ public class Main {
      */
     private static void pagarMensalidade(Cliente cliente, LocalDate dataPagamento) {
         Pagamento pagamento = new Pagamento(cliente, TipoPagamento.PIX,
-                TipoCobranca.MENSALIDADE, 150.0, dataPagamento);
+                TipoPlano.MENSALIDADE, 150.0, dataPagamento);
         cliente.registrarPagamento(pagamento);
     }
 

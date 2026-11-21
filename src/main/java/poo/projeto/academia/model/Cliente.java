@@ -1,7 +1,7 @@
 package poo.projeto.academia.model;
 
 import java.util.ArrayList;
-import poo.projeto.academia.enums.TipoCobranca;
+import poo.projeto.academia.enums.TipoPlano;
 
 /**
  * cliente da academia, que frequenta as salas de atividades
@@ -20,7 +20,7 @@ public class Cliente extends Pessoa {
     private int id;
 
     /** Forma de cobrança contratada (diária ou mensalidade). */
-    private TipoCobranca plano;
+    private TipoPlano plano;
 
     /** Lista de pagamentos realizados pelo cliente. */
     private ArrayList<Pagamento> pagamentos = new ArrayList<>();
@@ -36,7 +36,7 @@ public class Cliente extends Pessoa {
      * @param id       identificador único do cliente
      * @param plano    forma de cobrança contratada
      */
-    public Cliente(String nome, String cpf, String telefone, String email, String endereco, int id, TipoCobranca plano) {
+    public Cliente(String nome, String cpf, String telefone, String email, String endereco, int id, TipoPlano plano) {
         super(nome, cpf, telefone, email);
         super.setEndereco(endereco);
         this.id = id;
@@ -66,7 +66,7 @@ public class Cliente extends Pessoa {
      *
      * @return o plano
      */
-    public TipoCobranca getPlano() {
+    public TipoPlano getPlano() {
         return plano;
     }
 
@@ -75,7 +75,7 @@ public class Cliente extends Pessoa {
      *
      * @param plano o novo plano
      */
-    public void setPlano(TipoCobranca plano) {
+    public void setPlano(TipoPlano plano) {
         this.plano = plano;
     }
 
@@ -110,7 +110,7 @@ public class Cliente extends Pessoa {
      * @param tipo forma de cobrança a filtrar
      * @return o pagamento mais recente daquele tipo, ou {@code null} se não houver
      */
-    public Pagamento ultimoPagamento(TipoCobranca tipo) {
+    public Pagamento ultimoPagamento(TipoPlano tipo) {
         Pagamento ultimo = null;
         for (Pagamento p : pagamentos) {
             if (p.getTipoCobranca() == tipo

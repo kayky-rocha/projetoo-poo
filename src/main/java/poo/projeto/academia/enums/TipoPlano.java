@@ -6,7 +6,7 @@ package poo.projeto.academia.enums;
  * @author Kayky Francisco Rodrigues da Rocha
  * @author Aaron Araujo Agapito Guedes
  */
-public enum TipoCobranca {
+public enum TipoPlano {
     /** Paga por dia. */
     DIARIA,
     /** Paga por mês. */

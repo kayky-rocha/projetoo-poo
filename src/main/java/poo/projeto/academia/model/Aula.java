@@ -1,6 +1,6 @@
 package poo.projeto.academia.model;
 
-import poo.projeto.academia.enums.TipoCobranca;
+import poo.projeto.academia.enums.TipoPlano;
 import poo.projeto.academia.enums.TipoSala;
 import java.time.LocalTime;
 
@@ -189,8 +189,8 @@ public class Aula {
      * @param tipo diária ou mensalidade
      * @return o preço correspondente
      */
-    public double getValor(TipoCobranca tipo) {
-        return tipo == TipoCobranca.MENSALIDADE ? valorMensalidade : valorDiaria;
+    public double getValor(TipoPlano tipo) {
+        return tipo == TipoPlano.MENSALIDADE ? valorMensalidade : valorDiaria;
     }
 
     /**

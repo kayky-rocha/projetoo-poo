@@ -3,7 +3,7 @@ package poo.projeto.academia.controller.acesso;
 import java.time.LocalDate;
 import poo.projeto.academia.controller.Agenda;
 import poo.projeto.academia.model.Cliente;
-import poo.projeto.academia.enums.TipoCobranca;
+import poo.projeto.academia.enums.TipoPlano;
 
 /**
  * Elo da catraca que confere se o diarista tem agendamento confirmado
@@ -42,7 +42,7 @@ public class ValidadorAgendamento extends ValidadorAcesso {
     protected ResultadoAcesso verificar(SolicitacaoAcesso solicitacao) {
         Cliente cliente = solicitacao.getCliente();
         
-        if (cliente.getPlano() == TipoCobranca.MENSALIDADE) {
+        if (cliente.getPlano() == TipoPlano.MENSALIDADE) {
             return new ResultadoAcesso(true, "Acesso liberado.");
         }
 
