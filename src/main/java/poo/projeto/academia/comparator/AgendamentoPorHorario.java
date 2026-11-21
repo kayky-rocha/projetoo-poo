@@ -6,8 +6,7 @@ import poo.projeto.academia.model.Agendamento;
 /**
  * Comparator que ordena os agendamentos pelo horário da aula. No empate, ordena pela data.
  * <p>
- * Segue o modelo da classe TimeComparator do livro Java: Como Programar
- * (Deitel, Figura 20.8): compara um campo por vez e, se der empate (zero),
+ * compara um campo por vez e, se der empate (zero),
  * passa para o próximo campo.
  *
  * @author Kayky Francisco Rodrigues da Rocha
@@ -17,7 +16,7 @@ import poo.projeto.academia.model.Agendamento;
 public class AgendamentoPorHorario implements Comparator< Agendamento >
 {
     /**
-     * Compara dois agendamentos pelo horário (hora e minuto) e, no empate, pela data.
+     * Compara dois agendamentos pelo horário (hora e minuto) e se empatar, pela data
      *
      * @param agendamento1 primeiro agendamento
      * @param agendamento2 segundo agendamento
@@ -36,21 +35,21 @@ public class AgendamentoPorHorario implements Comparator< Agendamento >
         int minutoCompare = agendamento1.getAula().getHorario().getMinute() -
             agendamento2.getAula().getHorario().getMinute(); // compara o minuto
 
-        // então testa o minuto
+        // entao testa o minuto
         if ( minutoCompare != 0 )
             return minutoCompare;
 
         int anoCompare = agendamento1.getData().getYear() -
             agendamento2.getData().getYear(); // compara o ano
 
-        // então testa o ano
+        // entao testa o ano
         if ( anoCompare != 0 )
             return anoCompare;
 
         int mesCompare = agendamento1.getData().getMonthValue() -
             agendamento2.getData().getMonthValue(); // compara o mês
 
-        // então testa o mês
+        // entao testa o mês
         if ( mesCompare != 0 )
             return mesCompare;
 
@@ -58,5 +57,5 @@ public class AgendamentoPorHorario implements Comparator< Agendamento >
             agendamento2.getData().getDayOfMonth(); // compara o dia
 
         return diaCompare; // retorna o resultado da comparação de dias
-    } // fim do método compare
+    } // fim do metodo compare
 } // fim da classe AgendamentoPorHorario

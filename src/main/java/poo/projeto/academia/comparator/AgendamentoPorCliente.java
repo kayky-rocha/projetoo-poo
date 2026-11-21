@@ -6,8 +6,7 @@ import poo.projeto.academia.model.Agendamento;
 /**
  * Comparator que ordena os agendamentos pelo nome do cliente, em ordem alfabética. No empate, ordena pela data.
  * <p>
- * Segue o modelo da classe TimeComparator do livro Java: Como Programar
- * (Deitel, Figura 20.8): compara um campo por vez e, se der empate (zero),
+ * compara um campo por vez e, se der empate (zero),
  * passa para o próximo campo.
  *
  * @author Kayky Francisco Rodrigues da Rocha
@@ -21,8 +20,8 @@ public class AgendamentoPorCliente implements Comparator< Agendamento >
      *
      * @param agendamento1 primeiro agendamento
      * @param agendamento2 segundo agendamento
-     * @return número negativo se o primeiro vem antes, zero se forem iguais,
-     *         número positivo se o primeiro vem depois
+     * @return numero negativo se o primeiro vem antes, zero se forem iguais,
+     *         numero positivo se o primeiro vem depois
      */
     public int compare( Agendamento agendamento1, Agendamento agendamento2 )
     {
@@ -36,14 +35,14 @@ public class AgendamentoPorCliente implements Comparator< Agendamento >
         int anoCompare = agendamento1.getData().getYear() -
             agendamento2.getData().getYear(); // compara o ano
 
-        // então testa o ano
+        // entao testa o ano
         if ( anoCompare != 0 )
             return anoCompare;
 
         int mesCompare = agendamento1.getData().getMonthValue() -
             agendamento2.getData().getMonthValue(); // compara o mês
 
-        // então testa o mês
+        // entao testa o mês
         if ( mesCompare != 0 )
             return mesCompare;
 
@@ -51,5 +50,5 @@ public class AgendamentoPorCliente implements Comparator< Agendamento >
             agendamento2.getData().getDayOfMonth(); // compara o dia
 
         return diaCompare; // retorna o resultado da comparação de dias
-    } // fim do método compare
+    } // fim do metodo compare
 } // fim da classe AgendamentoPorCliente
