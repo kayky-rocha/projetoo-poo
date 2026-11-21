@@ -1,6 +1,6 @@
 package poo.projeto.academia.enums;
 /**
- * As formas de cobrança: por dia (diária) ou por mês (mensalidade).
+ * As formas de pagamento aceitas na academia.
  *
  * @author Kayky Francisco Rodrigues da Rocha
  * @author Aaron Araujo Agapito Guedes
