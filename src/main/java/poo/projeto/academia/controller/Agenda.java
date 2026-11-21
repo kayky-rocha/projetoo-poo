@@ -2,6 +2,8 @@ package poo.projeto.academia.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import poo.projeto.academia.enums.StatusAgendamento;
 import poo.projeto.academia.model.Agendamento;
 import poo.projeto.academia.model.Aula;
@@ -147,5 +149,20 @@ public class Agenda {
      */
     public ArrayList<Agendamento> listarAgendamentos() {
         return new ArrayList<>(agendamentos);
+    }
+
+    /**
+     * Lista os agendamentos em uma ordem escolhida.
+     * <p>
+     * Usa o {@link Collections#sort} com um objeto Comparator, como
+     * {@code new AgendamentoPorData()}. A lista original não muda.
+     *
+     * @param comparador define a ordem da lista
+     * @return cópia da lista de agendamentos, já ordenada
+     */
+    public ArrayList<Agendamento> listarAgendamentos(Comparator<Agendamento> comparador) {
+        ArrayList<Agendamento> lista = new ArrayList<>(agendamentos);
+        Collections.sort(lista, comparador);
+        return lista;
     }
 }
