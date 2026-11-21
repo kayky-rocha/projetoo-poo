@@ -1,7 +1,7 @@
 package poo.projeto.academia.controller.acesso;
 
 import poo.projeto.academia.controller.GerenciarClientes;
-import poo.projeto.academia.controller.Agenda;
+
 
 /**
  * Monta as cadeias de validação de acesso.
@@ -17,18 +17,21 @@ import poo.projeto.academia.controller.Agenda;
 public class ConfigurarAcesso {
     
     /**
-     * Monta a cadeia da entrada na academia: cadastro, mensalidade e agendamento.
+     * Monta a cadeia da entrada na academia: cadastro, mensalidade e diária.
+     * <p>
+     * O agendamento de aula não faz parte desta cadeia. Ele é conferido
+     * na cadeia da aula.
      *
      * @param gerenciarClientes gerenciador usado para conferir o cadastro
-     * @param agenda            agenda usada para conferir o agendamento do diarista
      * @return o primeiro elo da cadeia
      */
-    public static ValidadorAcesso montarCadeiaEntrada(GerenciarClientes gerenciarClientes, Agenda agenda) {
+    public static ValidadorAcesso montarCadeiaEntrada(GerenciarClientes gerenciarClientes) {
         ValidadorAcesso cadastro = new ValidadorCadastro(gerenciarClientes);
         ValidadorAcesso mensalidade = new ValidadorMensalidade();
-        ValidadorAcesso agendamento = new ValidadorAgendamento(agenda);
+        ValidadorAcesso diaria = new ValidadorDiaria();
+        
 
-        cadastro.definirProximo(mensalidade).definirProximo(agendamento);
+        cadastro.definirProximo(mensalidade).definirProximo(diaria);
         return cadastro;
     }
     

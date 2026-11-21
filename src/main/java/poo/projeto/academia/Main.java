@@ -76,7 +76,7 @@ public class Main {
 
         agenda.agendar(semConfirmar, spinning, hoje);
 
-        ValidadorAcesso cadeia = ConfigurarAcesso.montarCadeiaEntrada(gerenciarClientes, agenda);
+        ValidadorAcesso cadeia = ConfigurarAcesso.montarCadeiaEntrada(gerenciarClientes);
         Catraca catraca = new Catraca(cadeia);
 
         testar(catraca, emDia);
