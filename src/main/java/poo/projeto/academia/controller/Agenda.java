@@ -94,6 +94,25 @@ public class Agenda {
     }
 
     /**
+     * Cancela um agendamento pelo código.
+     * <p>
+     * Se o agendamento era preliminar, devolve 0. Se era confirmado,
+     * devolve 50% do valor.
+     *
+     * @param codigo código do agendamento
+     * @return valor a devolver ao cliente; 0 se o código não existir ou não houver reembolso
+     */
+    public double cancelar(int codigo) {
+        Agendamento agendamento = buscarAgendamento(codigo);
+
+        if (agendamento == null) {
+            return 0;
+        }
+
+        return agendamento.cancelar();
+    }
+
+    /**
      * Lista os agendamentos de um cliente.
      *
      * @param cliente cliente procurado

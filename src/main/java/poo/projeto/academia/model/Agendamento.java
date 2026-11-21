@@ -75,13 +75,22 @@ public class Agendamento {
 
     /**
      * Cancela o agendamento e calcula o reembolso.
+     * <p>
+     * O preliminar ainda não foi pago, então é cancelado sem reembolso.
+     * O confirmado devolve 50% do valor, e a academia retém os outros 50%.
      *
-     * @return valor a devolver ao cliente; 0 se não pôde cancelar
+     * @return valor a devolver ao cliente; 0 se era preliminar ou se não pôde cancelar
      */
     public double cancelar() {
         if (status == StatusAgendamento.CANCELADO || status == StatusAgendamento.REALIZADO) {
             return 0;
         }
+
+        if (status == StatusAgendamento.PRELIMINAR) {
+            status = StatusAgendamento.CANCELADO;
+            return 0;
+        }
+
         status = StatusAgendamento.CANCELADO;
         return calcularReembolso();
     }
