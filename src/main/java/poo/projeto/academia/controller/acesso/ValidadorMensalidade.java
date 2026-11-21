@@ -3,6 +3,7 @@ package poo.projeto.academia.controller.acesso;
 import java.time.LocalDate;
 import poo.projeto.academia.enums.TipoPlano;
 import poo.projeto.academia.model.Cliente;
+import poo.projeto.academia.enums.OrigemPagamento;
 import poo.projeto.academia.model.Pagamento;
 
 /**
@@ -40,7 +41,7 @@ public class ValidadorMensalidade extends ValidadorAcesso {
             return new ResultadoAcesso(true, "Acesso liberado.");
         }
 
-        Pagamento ultimo = cliente.ultimoPagamento(TipoPlano.MENSALIDADE);
+        Pagamento ultimo = cliente.ultimoPagamento(OrigemPagamento.MENSALIDADE);
 
         if (ultimo == null) {
             return new ResultadoAcesso(false, "Mensalidade não paga.");

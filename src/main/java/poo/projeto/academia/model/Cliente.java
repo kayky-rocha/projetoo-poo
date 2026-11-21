@@ -1,6 +1,7 @@
 package poo.projeto.academia.model;
 
 import java.util.ArrayList;
+import poo.projeto.academia.enums.OrigemPagamento;
 import poo.projeto.academia.enums.TipoPlano;
 
 /**
@@ -110,10 +111,10 @@ public class Cliente extends Pessoa {
      * @param tipo forma de cobrança a filtrar
      * @return o pagamento mais recente daquele tipo, ou {@code null} se não houver
      */
-    public Pagamento ultimoPagamento(TipoPlano tipo) {
+    public Pagamento ultimoPagamento(OrigemPagamento origem) {
         Pagamento ultimo = null;
         for (Pagamento p : pagamentos) {
-            if (p.getTipoPlano() == tipo
+            if (p.getOrigem() == origem
                 && (ultimo == null || p.getDataPagamento().isAfter(ultimo.getDataPagamento()))) {
                     ultimo = p;
             }
