@@ -113,7 +113,7 @@ public class Cliente extends Pessoa {
     public Pagamento ultimoPagamento(TipoPlano tipo) {
         Pagamento ultimo = null;
         for (Pagamento p : pagamentos) {
-            if (p.getTipoCobranca() == tipo
+            if (p.getTipoPlano() == tipo
                 && (ultimo == null || p.getDataPagamento().isAfter(ultimo.getDataPagamento()))) {
                     ultimo = p;
             }

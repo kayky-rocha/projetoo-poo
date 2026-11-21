@@ -22,7 +22,7 @@ public class Pagamento {
     private TipoPagamento tipoPagamento;
 
     /** Forma de cobrança aplicada. */
-    private TipoPlano tipoCobranca;
+    private TipoPlano tipoPlano;
 
     /** Valor pago pelo cliente. */
     private double valorPago;
@@ -42,7 +42,7 @@ public class Pagamento {
     public Pagamento(Cliente cliente, TipoPagamento tipoPagamento, TipoPlano tipoCobranca, double valorPago, LocalDate dataPagamento) {
         this.cliente = cliente;
         this.tipoPagamento = tipoPagamento;
-        this.tipoCobranca = tipoCobranca;
+        this.tipoPlano = tipoCobranca;
         this.valorPago = valorPago;
         this.dataPagamento = dataPagamento;
         
@@ -71,8 +71,8 @@ public class Pagamento {
      *
      * @return a forma de cobrança
      */
-    public TipoPlano getTipoCobranca() {
-        return tipoCobranca;
+    public TipoPlano getTipoPlano() {
+        return tipoPlano;
     }
 
     /**
@@ -99,7 +99,7 @@ public class Pagamento {
     * @return um mês após o pagamento se for mensalidade; {@code null} se for diária
     */
     public LocalDate calcularVencimento(){
-        if (tipoCobranca == TipoPlano.MENSALIDADE) {
+        if (tipoPlano == TipoPlano.MENSALIDADE) {
             return dataPagamento.plusMonths(1);
         }
         return null;
