@@ -1,23 +1,16 @@
 package poo.projeto.academia;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import poo.projeto.academia.controller.Agenda;
 import poo.projeto.academia.controller.GerenciarClientes;
 import poo.projeto.academia.controller.acesso.Catraca;
 import poo.projeto.academia.controller.acesso.ConfigurarAcesso;
 import poo.projeto.academia.controller.acesso.ValidadorAcesso;
 import poo.projeto.academia.controller.acesso.ResultadoAcesso;
-import poo.projeto.academia.enums.TipoPlano;
 import poo.projeto.academia.enums.OrigemPagamento;
+import poo.projeto.academia.enums.TipoPlano;
 import poo.projeto.academia.enums.TipoPagamento;
-import poo.projeto.academia.enums.TipoSala;
-import poo.projeto.academia.model.Agendamento;
-import poo.projeto.academia.model.Aula;
 import poo.projeto.academia.model.Cliente;
-import poo.projeto.academia.model.Funcionario;
 import poo.projeto.academia.model.Pagamento;
-import poo.projeto.academia.model.Sala;
 
 /**
  * Ponto de entrada do Sistema de Gerenciamento de Academia.
@@ -42,12 +35,6 @@ public class Main {
         LocalDate hoje = LocalDate.now();
 
         GerenciarClientes gerenciarClientes = new GerenciarClientes();
-        Agenda agenda = new Agenda();
-
-        Funcionario instrutor = new Funcionario("Rita", "900", "3390", "rita@email.com", "Rua Z",
-                0, "Instrutora", 2500.0, "rita", "123");
-        Sala sala = new Sala(1, TipoSala.SPINNING, 10);
-        Aula spinning = new Aula(1, "Spinning", sala, instrutor, LocalTime.of(8, 0), 30.0, 150.0);
 
         Cliente emDia = new Cliente("Ana", "111", "3399", "ana@email.com", "Rua A", 0, TipoPlano.MENSALIDADE);
         gerenciarClientes.cadastrarCliente(emDia);
@@ -68,13 +55,9 @@ public class Main {
 
         Cliente naoCadastrado = new Cliente("Davi", "444", "3396", "davi@email.com", "Rua D", 99, TipoPlano.DIARIA);
 
-        Agendamento agAna = agenda.agendar(emDia, spinning, hoje);
-        agAna.confirmar();
-
-        Agendamento agCarla = agenda.agendar(diarista, spinning, hoje);
-        agCarla.confirmar();
-
-        agenda.agendar(semConfirmar, spinning, hoje);
+        Pagamento diaria = new Pagamento(diarista, TipoPagamento.DINHEIRO,
+                OrigemPagamento.DIARIA, 30.0, hoje);
+        diarista.registrarPagamento(diaria);
 
         ValidadorAcesso cadeia = ConfigurarAcesso.montarCadeiaEntrada(gerenciarClientes);
         Catraca catraca = new Catraca(cadeia);
