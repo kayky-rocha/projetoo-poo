@@ -2,16 +2,15 @@ package poo.projeto.academia.controller.acesso;
 
 import java.time.LocalDate;
 import poo.projeto.academia.controller.Agenda;
+import poo.projeto.academia.model.Aula;
 import poo.projeto.academia.model.Cliente;
-import poo.projeto.academia.enums.TipoPlano;
 
 /**
- * Elo da catraca que confere se o diarista tem agendamento confirmado
- * para o dia da entrada.
+ * Elo da cadeia da aula que confere se o cliente tem agendamento
+ * confirmado para aquela aula no dia.
  * <p>
- * A diária é cobrada na confirmação do agendamento, então ele é o
- * comprovante do diarista. Mensalistas não precisam de agendamento e
- * passam direto.
+ * Vale para todos os clientes, inclusive o mensalista: para entrar em uma
+ * aula (Pilates, Spinning etc.) é preciso ter agendado e confirmado.
  *
  * @author Kayky Francisco Rodrigues da Rocha
  * @author Aaron Araujo Agapito Guedes
@@ -33,23 +32,24 @@ public class ValidadorAgendamento extends ValidadorAcesso {
     }
 
     /**
-     * Reprova diaristas sem agendamento confirmado hoje.
+     * Reprova quem não tem agendamento confirmado na aula hoje.
      *
-     * @param solicitacao pedido de acesso
+     * @param solicitacao pedido de acesso, com a aula
      * @return resultado da verificação de agendamento
      */
     @Override
     protected ResultadoAcesso verificar(SolicitacaoAcesso solicitacao) {
         Cliente cliente = solicitacao.getCliente();
-        
-        if (cliente.getPlano() == TipoPlano.MENSALIDADE) {
-            return new ResultadoAcesso(true, "Acesso liberado.");
+        Aula aula = solicitacao.getAula();
+
+        if (aula == null) {
+            return new ResultadoAcesso(false, "Aula não informada.");
         }
 
         LocalDate hoje = solicitacao.getDataHora().toLocalDate();
 
-        if (agenda.temAgendamentoConfirmado(cliente, hoje) == false) {
-            return new ResultadoAcesso(false, "Sem agendamento confirmado para hoje.");
+        if (agenda.temAgendamentoConfirmado(cliente, aula, hoje) == false) {
+            return new ResultadoAcesso(false, "Sem agendamento confirmado para esta aula hoje.");
         }
 
         return new ResultadoAcesso(true, "Acesso liberado.");

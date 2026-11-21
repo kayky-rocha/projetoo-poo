@@ -145,6 +145,27 @@ public class Agenda {
     }
 
     /**
+     * Diz se o cliente tem agendamento confirmado em uma aula específica na data.
+     * <p>
+     * Usado pela cadeia da aula: o cliente só entra na aula em que agendou.
+     *
+     * @param cliente cliente procurado
+     * @param aula    aula em que o cliente quer entrar
+     * @param data    dia a verificar
+     * @return {@code true} se tiver agendamento confirmado nessa aula nesse dia
+     */
+    public boolean temAgendamentoConfirmado(Cliente cliente, Aula aula, LocalDate data) {
+        for (Agendamento a : listarPorCliente(cliente)) {
+            if (a.getAula().getCodigo() == aula.getCodigo()
+                    && a.getData().equals(data)
+                    && a.getStatus() == StatusAgendamento.CONFIRMADO) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Cancela os agendamentos preliminares que passaram do prazo.
      *
      * @param hoje data usada como referência

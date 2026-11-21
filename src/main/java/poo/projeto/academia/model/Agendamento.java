@@ -82,7 +82,7 @@ public class Agendamento {
      * @return valor a devolver ao cliente; 0 se era preliminar ou se não pôde cancelar
      */
     public double cancelar() {
-        if (status == StatusAgendamento.CANCELADO || status == StatusAgendamento.REALIZADO) {
+        if (status == StatusAgendamento.CANCELADO || status == StatusAgendamento.REALIZADO) { 
             return 0;
         }
 
