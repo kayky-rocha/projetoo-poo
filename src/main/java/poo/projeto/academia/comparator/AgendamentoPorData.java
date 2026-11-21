@@ -6,8 +6,7 @@ import poo.projeto.academia.model.Agendamento;
 /**
  * Comparator que ordena os agendamentos pela data da aula. No empate, ordena pelo horário.
  * <p>
- * Segue o modelo da classe TimeComparator do livro Java: Como Programar
- * (Deitel, Figura 20.8): compara um campo por vez e, se der empate (zero),
+ * compara um campo por vez e, se der empate (zero),
  * passa para o próximo campo.
  *
  * @author Kayky Francisco Rodrigues da Rocha
@@ -21,8 +20,8 @@ public class AgendamentoPorData implements Comparator< Agendamento >
      *
      * @param agendamento1 primeiro agendamento
      * @param agendamento2 segundo agendamento
-     * @return número negativo se o primeiro vem antes, zero se forem iguais,
-     *         número positivo se o primeiro vem depois
+     * @return numero negativo se o primeiro vem antes, zero se forem iguais,
+     *         numero positivo se o primeiro vem depois
      */
     public int compare( Agendamento agendamento1, Agendamento agendamento2 )
     {
@@ -36,21 +35,21 @@ public class AgendamentoPorData implements Comparator< Agendamento >
         int mesCompare = agendamento1.getData().getMonthValue() -
             agendamento2.getData().getMonthValue(); // compara o mês
 
-        // então testa o mês
+        // entao testa o mes
         if ( mesCompare != 0 )
             return mesCompare;
 
         int diaCompare = agendamento1.getData().getDayOfMonth() -
             agendamento2.getData().getDayOfMonth(); // compara o dia
 
-        // então testa o dia
+        // entao testa o dia
         if ( diaCompare != 0 )
             return diaCompare;
 
         int horaCompare = agendamento1.getAula().getHorario().getHour() -
             agendamento2.getAula().getHorario().getHour(); // compara a hora
 
-        // então testa a hora
+        // entao testa a hora
         if ( horaCompare != 0 )
             return horaCompare;
 
@@ -58,5 +57,5 @@ public class AgendamentoPorData implements Comparator< Agendamento >
             agendamento2.getAula().getHorario().getMinute(); // compara o minuto
 
         return minutoCompare; // retorna o resultado da comparação de minutos
-    } // fim do método compare
+    } // fim do metodo compare
 } // fim da classe AgendamentoPorData
