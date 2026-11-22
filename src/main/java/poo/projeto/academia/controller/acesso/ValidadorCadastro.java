@@ -45,4 +45,14 @@ public class ValidadorCadastro extends ValidadorAcesso {
 
         return new ResultadoAcesso(true, "Acesso liberado.");
     }
+
+    /**
+     * Retorna o validador em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "ValidadorCadastro[confere se o cliente está cadastrado, " + super.toString() + "]";
+    }
 }

@@ -85,4 +85,15 @@ public class ItemVenda {
         return precoUnitario * quantidade;
     }
 
+    /**
+     * Retorna o item da venda em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "ItemVenda[produto=" + produto.getNome() + ", quantidade=" + quantidade
+                + ", precoUnitario=R$ " + String.format("%.2f", precoUnitario)
+                + ", subtotal=R$ " + String.format("%.2f", subtotal()) + "]";
+    }
 }

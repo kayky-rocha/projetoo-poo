@@ -122,4 +122,15 @@ public abstract class Pessoa {
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
+
+    /**
+     * Retorna os dados pessoais em texto. As subclasses usam este texto com {@code super.toString()}.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "nome=" + nome + ", cpf=" + cpf + ", telefone=" + telefone
+                + ", email=" + email + ", endereco=" + endereco;
+    }
 }

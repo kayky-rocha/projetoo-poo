@@ -46,4 +46,20 @@ public class ResultadoAcesso {
     public String getMotivo() {
         return motivo;
     }
+
+    /**
+     * Retorna o resultado em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        String situacao;
+        if (liberado) {
+            situacao = "liberado";
+        } else {
+            situacao = "barrado";
+        }
+        return "ResultadoAcesso[" + situacao + ", motivo=" + motivo + "]";
+    }
 }

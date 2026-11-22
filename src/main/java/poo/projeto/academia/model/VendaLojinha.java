@@ -62,4 +62,14 @@ public class VendaLojinha extends Venda {
     public OrigemPagamento getOrigem() {
         return OrigemPagamento.LOJA;
     }
+
+    /**
+     * Retorna a venda da lojinha em texto, com os dados herdados de Venda.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "VendaLojinha | " + super.toString();
+    }
 }

@@ -44,4 +44,14 @@ public class Administrador extends Funcionario {
     public boolean validarSenhaAdm(String senhaDigitada) {
         return this.senhaAdm.equals(senhaDigitada);
     }
+
+    /**
+     * Retorna o administrador em texto, com os dados herdados de Funcionario. As senhas não aparecem.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "Administrador -> " + super.toString();
+    }
 }

@@ -164,4 +164,14 @@ public class GerenciarFuncionarios {
         }
         return false;
     }
+
+    /**
+     * Retorna o cadastro de funcionários em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "GerenciarFuncionarios[funcionarios=" + funcionarios.size() + ", proximoId=" + proximoId + "]";
+    }
 }

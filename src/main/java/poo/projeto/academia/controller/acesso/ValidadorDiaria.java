@@ -51,5 +51,14 @@ public class ValidadorDiaria extends ValidadorAcesso {
 
         return new ResultadoAcesso(true, "Acesso liberado.");
     }
- 
+
+    /**
+     * Retorna o validador em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "ValidadorDiaria[confere se o diarista pagou a diária de hoje, " + super.toString() + "]";
+    }
 }

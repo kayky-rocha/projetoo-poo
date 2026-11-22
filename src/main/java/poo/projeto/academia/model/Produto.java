@@ -102,4 +102,13 @@ public class Produto {
         }
     }
 
+    /**
+     * Retorna os dados básicos do produto em texto. As subclasses usam este texto com {@code super.toString()}.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "id=" + id + ", nome=" + nome + ", preco=R$ " + String.format("%.2f", preco);
+    }
 }

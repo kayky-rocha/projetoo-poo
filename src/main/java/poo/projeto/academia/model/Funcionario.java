@@ -141,4 +141,15 @@ public class Funcionario extends Pessoa {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    /**
+     * Retorna o funcionário em texto, com os dados pessoais herdados de Pessoa. A senha não aparece.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "Funcionario[id=" + id + ", cargo=" + cargo + ", salario=R$ " + String.format("%.2f", salario)
+                + ", usuario=" + usuario + ", " + super.toString() + "]";
+    }
 }

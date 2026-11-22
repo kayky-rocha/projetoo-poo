@@ -75,4 +75,14 @@ public class CatracaAula {
         }
         return resultado;
     }
+
+    /**
+     * Retorna a catraca da aula em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "CatracaAula[primeiro elo=" + primeiroValidador.getClass().getSimpleName() + "]";
+    }
 }

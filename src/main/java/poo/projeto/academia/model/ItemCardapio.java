@@ -60,5 +60,20 @@ public class ItemCardapio extends Produto {
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
     }
-    
+
+    /**
+     * Retorna o item do cardápio em texto, com os dados herdados de Produto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        String situacao;
+        if (disponivel) {
+            situacao = "sim";
+        } else {
+            situacao = "não";
+        }
+        return "ItemCardapio[" + super.toString() + ", categoria=" + categoria + ", disponivel=" + situacao + "]";
+    }
 }

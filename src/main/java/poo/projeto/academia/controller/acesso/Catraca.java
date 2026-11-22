@@ -223,4 +223,21 @@ public class Catraca {
         }
         return null;
     }
+
+    /**
+     * Retorna a catraca em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        int dentro = 0;
+        for (RegistroCatraca r : registros) {
+            if (r.estaAberto()) {
+                dentro++;
+            }
+        }
+        return "Catraca[registros=" + registros.size() + ", clientes na academia=" + dentro
+                + ", primeiro elo=" + primeiroValidador.getClass().getSimpleName() + "]";
+    }
 }

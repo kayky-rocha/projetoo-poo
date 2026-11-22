@@ -229,4 +229,16 @@ public class Agendamento {
     public Pagamento getPagamento() {
         return pagamento;
     }
+
+    /**
+     * Retorna o agendamento em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "Agendamento[codigo=" + codigo + ", cliente=" + cliente.getNome() + ", aula=" + aula.getNome()
+                + ", data=" + data + ", horario=" + aula.getHorario() + ", valor=R$ " + String.format("%.2f", valor)
+                + ", status=" + status + "]";
+    }
 }

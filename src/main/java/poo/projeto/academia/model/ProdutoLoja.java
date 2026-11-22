@@ -94,5 +94,14 @@ public class ProdutoLoja extends Produto {
         }
         estoque += quantidade;
     }
-    
+
+    /**
+     * Retorna o produto da loja em texto, com os dados herdados de Produto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "ProdutoLoja[" + super.toString() + ", estoque=" + estoque + ", categoria=" + categoria + "]";
+    }
 }

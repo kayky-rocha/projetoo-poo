@@ -53,4 +53,14 @@ public class ConfigurarAcesso {
         cadastro.definirProximo(agendamento);
         return cadastro;
     }
+
+    /**
+     * Retorna em texto o que esta classe faz.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "ConfigurarAcesso: monta a cadeia de entrada e a cadeia da aula";
+    }
 }

@@ -92,4 +92,14 @@ public class Main {
         ResultadoAcesso resultado = catraca.registrarEntrada(cliente);
         System.out.println(cliente.getNome() + " -> " + resultado.getMotivo());
     }
+
+    /**
+     * Retorna em texto o que esta classe faz.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "Main: ponto de entrada do sistema da academia";
+    }
 }

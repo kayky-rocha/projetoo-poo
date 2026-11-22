@@ -54,4 +54,14 @@ public class ValidadorAgendamento extends ValidadorAcesso {
 
         return new ResultadoAcesso(true, "Acesso liberado.");
     }
+
+    /**
+     * Retorna o validador em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "ValidadorAgendamento[confere o agendamento confirmado na aula, " + super.toString() + "]";
+    }
 }

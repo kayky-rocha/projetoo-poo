@@ -141,4 +141,14 @@ public class GerenciarClientes {
         }
         return false;
     }
+
+    /**
+     * Retorna o cadastro de clientes em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "GerenciarClientes[clientes=" + clientes.size() + ", proximoId=" + proximoId + "]";
+    }
 }

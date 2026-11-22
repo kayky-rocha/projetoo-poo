@@ -77,4 +77,22 @@ public class SolicitacaoAcesso {
     public Aula getAula() {
         return aula;
     }
+
+    /**
+     * Retorna a solicitação em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        String nomeCliente = "-";
+        if (cliente != null) {
+            nomeCliente = cliente.getNome();
+        }
+        String nomeAula = "entrada da academia";
+        if (aula != null) {
+            nomeAula = aula.getNome();
+        }
+        return "SolicitacaoAcesso[cliente=" + nomeCliente + ", dataHora=" + dataHora + ", aula=" + nomeAula + "]";
+    }
 }

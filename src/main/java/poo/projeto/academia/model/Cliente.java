@@ -146,4 +146,15 @@ public class Cliente extends Pessoa {
     public ArrayList<Extrato> getExtratos() {
         return new ArrayList<>(extratos);
     }
+
+    /**
+     * Retorna o cliente em texto, com os dados pessoais herdados de Pessoa.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "Cliente[id=" + id + ", plano=" + plano + ", " + super.toString()
+                + ", pagamentos=" + pagamentos.size() + ", extratos=" + extratos.size() + "]";
+    }
 }

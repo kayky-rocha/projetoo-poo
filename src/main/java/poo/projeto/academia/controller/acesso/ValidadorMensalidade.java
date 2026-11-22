@@ -56,4 +56,14 @@ public class ValidadorMensalidade extends ValidadorAcesso {
 
         return new ResultadoAcesso(true, "Acesso liberado.");
     }
+
+    /**
+     * Retorna o validador em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "ValidadorMensalidade[confere se a mensalidade está em dia, " + super.toString() + "]";
+    }
 }

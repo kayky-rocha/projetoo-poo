@@ -66,4 +66,17 @@ public abstract class ValidadorAcesso {
      * @return resultado da verificação desta regra
      */
     protected abstract ResultadoAcesso verificar(SolicitacaoAcesso solicitacao);
+
+    /**
+     * Retorna em texto qual é o próximo elo da cadeia. As subclasses usam este texto com {@code super.toString()}.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        if (proximo == null) {
+            return "próximo elo: nenhum";
+        }
+        return "próximo elo: " + proximo.getClass().getSimpleName();
+    }
 }

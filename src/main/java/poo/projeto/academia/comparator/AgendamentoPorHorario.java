@@ -58,4 +58,14 @@ public class AgendamentoPorHorario implements Comparator< Agendamento >
 
         return diaCompare; // retorna o resultado da comparação de dias
     } // fim do metodo compare
+
+    /**
+     * Retorna em texto o critério de ordenação.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "Ordena agendamentos por horário (desempate: data)";
+    }
 } // fim da classe AgendamentoPorHorario

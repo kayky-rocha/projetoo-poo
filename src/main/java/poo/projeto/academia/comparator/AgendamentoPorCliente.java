@@ -51,4 +51,14 @@ public class AgendamentoPorCliente implements Comparator< Agendamento >
 
         return diaCompare; // retorna o resultado da comparação de dias
     } // fim do metodo compare
+
+    /**
+     * Retorna em texto o critério de ordenação.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "Ordena agendamentos pelo nome do cliente (desempate: data)";
+    }
 } // fim da classe AgendamentoPorCliente

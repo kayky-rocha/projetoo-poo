@@ -219,4 +219,14 @@ public class Agenda {
         Collections.sort(lista, comparador);
         return lista;
     }
+
+    /**
+     * Retorna a agenda em texto.
+     *
+     * @return o objeto em texto
+     */
+    @Override
+    public String toString() {
+        return "Agenda[agendamentos=" + agendamentos.size() + ", proximoCodigo=" + proximoCodigo + "]";
+    }
 }
