@@ -46,6 +46,25 @@ public class Administrador extends Funcionario {
     }
 
     /**
+     * Troca a senha administrativa. Só funciona se a senha atual estiver certa.
+     *
+     * @param senhaAtual senha administrativa atual
+     * @param novaSenha  nova senha administrativa
+     * @return {@code true} se trocou; {@code false} se a senha atual estiver errada
+     *         ou a nova estiver vazia
+     */
+    public boolean alterarSenhaAdm(String senhaAtual, String novaSenha) {
+        if (validarSenhaAdm(senhaAtual) == false) {
+            return false;
+        }
+        if (novaSenha == null || novaSenha.isBlank()) {
+            return false;
+        }
+        this.senhaAdm = novaSenha;
+        return true;
+    }
+
+    /**
      * Retorna o administrador em texto, com os dados herdados de Funcionario. As senhas não aparecem.
      *
      * @return o objeto em texto
