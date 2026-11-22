@@ -2,7 +2,9 @@ package poo.projeto.academia.model;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import poo.projeto.academia.enums.OrigemPagamento;
 import poo.projeto.academia.enums.StatusAgendamento;
+import poo.projeto.academia.enums.TipoPagamento;
 
 /**
  * Agendamento de um cliente em uma aula, em uma data.
@@ -41,6 +43,9 @@ public class Agendamento {
     /** Estado atual do agendamento. */
     private StatusAgendamento status;
 
+    /** Pagamento da aula, criado na confirmação; {@code null} enquanto preliminar. */
+    private Pagamento pagamento;
+
     /**
      * Cria um agendamento preliminar. O valor vem da aula, de acordo
      * com o plano do cliente.
@@ -61,14 +66,17 @@ public class Agendamento {
     }
 
     /**
-     * Confirma o agendamento. Só funciona se ele estiver preliminar.
+     * Confirma o agendamento e cria o pagamento da aula (origem AULA).
+     * Só funciona se ele estiver preliminar.
      *
+     * @param forma forma de pagamento
      * @return {@code true} se confirmou; {@code false} caso contrário
      */
-    public boolean confirmar() {
+    public boolean confirmar(TipoPagamento forma) {
         if (status != StatusAgendamento.PRELIMINAR) {
             return false;
         }
+        pagamento = new Pagamento(cliente, forma, OrigemPagamento.AULA, valor, LocalDate.now());
         status = StatusAgendamento.CONFIRMADO;
         return true;
     }
@@ -211,5 +219,14 @@ public class Agendamento {
      */
     public StatusAgendamento getStatus() {
         return status;
+    }
+
+    /**
+     * Retorna o pagamento da aula.
+     *
+     * @return o pagamento, ou {@code null} se ainda não foi confirmado
+     */
+    public Pagamento getPagamento() {
+        return pagamento;
     }
 }

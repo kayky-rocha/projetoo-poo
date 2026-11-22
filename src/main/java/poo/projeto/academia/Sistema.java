@@ -1,6 +1,7 @@
 package poo.projeto.academia;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import poo.projeto.academia.controller.Agenda;
 import poo.projeto.academia.controller.Financeiro;
 import poo.projeto.academia.controller.GerenciarClientes;
@@ -12,6 +13,7 @@ import poo.projeto.academia.controller.acesso.CatracaAula;
 import poo.projeto.academia.controller.acesso.ConfigurarAcesso;
 import poo.projeto.academia.enums.OrigemPagamento;
 import poo.projeto.academia.enums.TipoPagamento;
+import poo.projeto.academia.model.Agendamento;
 import poo.projeto.academia.model.Cliente;
 import poo.projeto.academia.model.Extrato;
 import poo.projeto.academia.model.Pagamento;
@@ -117,6 +119,60 @@ public class Sistema {
         Extrato extrato = venda.finalizar(forma);
         financeiro.registrarPagamento(venda.getPagamento());
         return extrato;
+    }
+
+    /**
+     * Confirma um agendamento: cria o pagamento da aula (AULA), registra
+     * esse pagamento no cliente e no financeiro e gera o extrato.
+     *
+     * @param codigo código do agendamento
+     * @param forma  forma de pagamento
+     * @return o extrato do agendamento, ou {@code null} se não pôde confirmar
+     */
+    public Extrato confirmarAgendamento(int codigo, TipoPagamento forma) {
+        Agendamento agendamento = agenda.buscarAgendamento(codigo);
+        if (agendamento == null || agendamento.confirmar(forma) == false) {
+            return null;
+        }
+
+        Cliente cliente = agendamento.getCliente();
+        Pagamento pagamento = agendamento.getPagamento();
+        cliente.registrarPagamento(pagamento);
+        financeiro.registrarPagamento(pagamento);
+
+        String descricao = "Aula " + agendamento.getAula().getNome() + " em " + agendamento.getData()
+                + " às " + agendamento.getAula().getHorario() + "\n";
+        Extrato extrato = new Extrato(LocalDateTime.now(), cliente, descricao,
+                pagamento.getValorPago(), forma);
+        cliente.adicionarExtrato(extrato);
+        return extrato;
+    }
+
+    /**
+     * Cancela um agendamento. Se ele estava confirmado, devolve 50% e
+     * registra o reembolso no financeiro como um pagamento CANCELAMENTO
+     * de valor negativo. A academia fica com os outros 50%.
+     *
+     * @param codigo código do agendamento
+     * @return valor devolvido ao cliente; 0 se era preliminar ou não pôde cancelar
+     */
+    public double cancelarAgendamento(int codigo) {
+        Agendamento agendamento = agenda.buscarAgendamento(codigo);
+        if (agendamento == null) {
+            return 0;
+        }
+
+        double reembolso = agenda.cancelar(codigo);
+
+        if (reembolso > 0) {
+            Cliente cliente = agendamento.getCliente();
+            TipoPagamento forma = agendamento.getPagamento().getTipoPagamento();
+            Pagamento cancelamento = new Pagamento(cliente, forma, OrigemPagamento.CANCELAMENTO,
+                    -reembolso, LocalDate.now());
+            cliente.registrarPagamento(cancelamento);
+            financeiro.registrarPagamento(cancelamento);
+        }
+        return reembolso;
     }
 
     /**
