@@ -8,7 +8,7 @@ package poo.projeto.academia.model;
  *
  * @author Kayky Francisco Rodrigues da Rocha
  * @author Aaron Araujo Agapito Guedes
- * @see ProdutoLojinha
+ * @see ProdutoLoja
  * @see ItemCardapio
  */
 public class Produto {

@@ -26,6 +26,9 @@ public class Cliente extends Pessoa {
     /** Lista de pagamentos realizados pelo cliente. */
     private ArrayList<Pagamento> pagamentos = new ArrayList<>();
 
+    /** Extratos das compras do cliente (loja, lanchonete e agendamentos). */
+    private ArrayList<Extrato> extratos = new ArrayList<>();
+
     /**
      * Cria um cliente com dados pessoais, identificador e plano.
      *
@@ -121,4 +124,26 @@ public class Cliente extends Pessoa {
         }
         return ultimo;
     }
- }
+
+    /**
+     * Guarda um extrato no histórico do cliente.
+     *
+     * @param extrato extrato a guardar
+     * @throws IllegalArgumentException se for nulo
+     */
+    public void adicionarExtrato(Extrato extrato) {
+        if (extrato == null) {
+            throw new IllegalArgumentException("Extrato não pode ser nulo.");
+        }
+        extratos.add(extrato);
+    }
+
+    /**
+     * Retorna os extratos do cliente.
+     *
+     * @return cópia da lista de extratos
+     */
+    public ArrayList<Extrato> getExtratos() {
+        return new ArrayList<>(extratos);
+    }
+}
