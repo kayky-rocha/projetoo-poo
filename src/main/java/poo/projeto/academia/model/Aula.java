@@ -16,8 +16,8 @@ import java.time.LocalTime;
  */
 public class Aula {
 
-    /** Código único da aula. */
-    private int codigo;
+    /** Identificador único da aula. */
+    private int id;
 
     /** Nome da aula, por exemplo "Spinning manhã". */
     private String nome;
@@ -43,7 +43,7 @@ public class Aula {
     /**
      * Cria uma aula. O número de vagas começa igual à capacidade da sala.
      *
-     * @param codigo           código da aula
+     * @param id           identificador da aula
      * @param nome             nome da aula
      * @param sala             sala onde acontece
      * @param instrutor        instrutor responsável
@@ -51,9 +51,9 @@ public class Aula {
      * @param valorDiaria      preço da diária
      * @param valorMensalidade preço da mensalidade
      */
-    public Aula(int codigo, String nome, Sala sala, Funcionario instrutor, LocalTime horario,
+    public Aula(int id, String nome, Sala sala, Funcionario instrutor, LocalTime horario,
             double valorDiaria, double valorMensalidade) {
-        this.codigo = codigo;
+        this.id = id;
         this.nome = nome;
         this.horario = horario;
         this.valorDiaria = valorDiaria;
@@ -63,21 +63,21 @@ public class Aula {
     }
 
     /**
-     * Retorna o código da aula.
+     * Retorna o identificador da aula.
      *
-     * @return o código
+     * @return o identificador
      */
-    public int getCodigo() {
-        return codigo;
+    public int getId() {
+        return id;
     }
 
     /**
-     * Altera o código da aula.
+     * Altera o identificador da aula.
      *
-     * @param codigo o novo código
+     * @param id o novo identificador
      */
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -239,10 +239,10 @@ public class Aula {
      */
     @Override
     public String toString() {
-        return "Aula[codigo=" + codigo + ", nome=" + nome + ", tipo=" + getTipoAula()
+        return "Aula[id=" + id + ", nome=" + nome + ", tipo=" + getTipoAula()
                 + ", sala=" + (sala == null ? "-" : sala.getNumero()) + ", horario=" + horario
                 + ", instrutor=" + (instrutor == null ? "-" : instrutor.getNome())
                 + ", vagas=" + capacidade + ", diaria=R$ " + String.format("%.2f", valorDiaria)
                 + ", mensalidade=R$ " + String.format("%.2f", valorMensalidade) + "]";
     }
-}
+}

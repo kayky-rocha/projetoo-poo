@@ -25,15 +25,15 @@ public class Agenda {
     /** Agendamentos registrados. */
     private ArrayList<Agendamento> agendamentos;
 
-    /** Próximo código a ser atribuído a um agendamento. */
-    private int proximoCodigo;
+    /** Próximo identificador a ser atribuído a um agendamento. */
+    private int proximoId;
 
     /**
      * Cria a agenda vazia.
      */
     public Agenda() {
         this.agendamentos = new ArrayList<>();
-        this.proximoCodigo = 1;
+        this.proximoId = 1;
     }
 
     /**
@@ -53,8 +53,8 @@ public class Agenda {
             throw new IllegalArgumentException("Aula lotada nesta data.");
         }
 
-        Agendamento agendamento = new Agendamento(proximoCodigo, cliente, aula, data);
-        proximoCodigo = proximoCodigo + 1;
+        Agendamento agendamento = new Agendamento(proximoId, cliente, aula, data);
+        proximoId = proximoId + 1;
         agendamentos.add(agendamento);
         return agendamento;
     }
@@ -79,14 +79,14 @@ public class Agenda {
     }
 
     /**
-     * Busca um agendamento pelo código.
+     * Busca um agendamento pelo identificador.
      *
-     * @param codigo código do agendamento
+     * @param id identificador do agendamento
      * @return o agendamento, ou {@code null} se não existir
      */
-    public Agendamento buscarAgendamento(int codigo) {
+    public Agendamento buscarAgendamento(int id) {
         for (Agendamento a : agendamentos) {
-            if (a.getCodigo() == codigo) {
+            if (a.getId() == id) {
                 return a;
             }
         }
@@ -94,16 +94,16 @@ public class Agenda {
     }
 
     /**
-     * Cancela um agendamento pelo código.
+     * Cancela um agendamento pelo identificador.
      * <p>
      * Se o agendamento era preliminar, devolve 0. Se era confirmado,
      * devolve 50% do valor.
      *
-     * @param codigo código do agendamento
-     * @return valor a devolver ao cliente; 0 se o código não existir ou não houver reembolso
+     * @param id identificador do agendamento
+     * @return valor a devolver ao cliente; 0 se o identificador não existir ou não houver reembolso
      */
-    public double cancelar(int codigo) {
-        Agendamento agendamento = buscarAgendamento(codigo);
+    public double cancelar(int id) {
+        Agendamento agendamento = buscarAgendamento(id);
 
         if (agendamento == null) {
             return 0;
@@ -170,7 +170,7 @@ public class Agenda {
      */
     public Agendamento buscarAgendamentoConfirmado(Cliente cliente, Aula aula, LocalDate data) {
         for (Agendamento a : listarPorCliente(cliente)) {
-            if (a.getAula().getCodigo() == aula.getCodigo()
+            if (a.getAula().getId() == aula.getId()
                     && a.getData().equals(data)
                     && a.getStatus() == StatusAgendamento.CONFIRMADO) {
                 return a;
@@ -227,6 +227,6 @@ public class Agenda {
      */
     @Override
     public String toString() {
-        return "Agenda[agendamentos=" + agendamentos.size() + ", proximoCodigo=" + proximoCodigo + "]";
+        return "Agenda[agendamentos=" + agendamentos.size() + ", proximoId=" + proximoId + "]";
     }
 }

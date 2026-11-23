@@ -368,14 +368,14 @@ public class Sistema {
      * Confirma um agendamento: cria o pagamento da aula (AULA), registra
      * esse pagamento no cliente e no financeiro e gera o extrato.
      *
-     * @param codigo código do agendamento
+     * @param id identificador do agendamento
      * @param forma  forma de pagamento
      * @return o extrato do agendamento, ou {@code null} se não pôde confirmar
      * @throws IllegalStateException se ninguém fez login
      */
-    public Extrato confirmarAgendamento(int codigo, TipoPagamento forma) {
+    public Extrato confirmarAgendamento(int id, TipoPagamento forma) {
         exigirLogin();
-        Agendamento agendamento = agenda.buscarAgendamento(codigo);
+        Agendamento agendamento = agenda.buscarAgendamento(id);
         if (agendamento == null || agendamento.confirmar(forma) == false) {
             return null;
         }
@@ -398,18 +398,18 @@ public class Sistema {
      * registra o reembolso no financeiro como um pagamento CANCELAMENTO
      * de valor negativo. A academia fica com os outros 50%.
      *
-     * @param codigo código do agendamento
+     * @param id identificador do agendamento
      * @return valor devolvido ao cliente; 0 se era preliminar ou não pôde cancelar
      * @throws IllegalStateException se ninguém fez login
      */
-    public double cancelarAgendamento(int codigo) {
+    public double cancelarAgendamento(int id) {
         exigirLogin();
-        Agendamento agendamento = agenda.buscarAgendamento(codigo);
+        Agendamento agendamento = agenda.buscarAgendamento(id);
         if (agendamento == null) {
             return 0;
         }
 
-        double reembolso = agenda.cancelar(codigo);
+        double reembolso = agenda.cancelar(id);
 
         if (reembolso > 0) {
             Cliente cliente = agendamento.getCliente();

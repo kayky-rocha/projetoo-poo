@@ -16,7 +16,7 @@ import java.time.LocalDate;
  */
 public class Pagamento {
 
-    /** Código único do pagamento. É definido pelo Financeiro ao registrar. */
+    /** Identificador único do pagamento. É definido pelo Financeiro ao registrar. */
     private int id;
 
     /** Cliente que realizou o pagamento. */
@@ -156,7 +156,7 @@ public class Pagamento {
     /**
      * Descreve o pagamento em texto.
      *
-     * @return código, origem, forma, valor, data e nome do cliente
+     * @return identificador, origem, forma, valor, data e nome do cliente
      */
     @Override
     public String toString() {

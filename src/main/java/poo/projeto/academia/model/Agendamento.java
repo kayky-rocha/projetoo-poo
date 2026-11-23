@@ -22,8 +22,8 @@ public class Agendamento {
     /** Prazo, em dias úteis, para confirmar um agendamento preliminar. */
     private static final int PRAZO_DIAS_UTEIS = 5;
 
-    /** Código único do agendamento. */
-    private int codigo;
+    /** Identificador único do agendamento. */
+    private int id;
 
     /** Cliente que agendou. */
     private Cliente cliente;
@@ -50,13 +50,13 @@ public class Agendamento {
      * Cria um agendamento preliminar. O valor vem da aula, de acordo
      * com o plano do cliente.
      *
-     * @param codigo  código do agendamento
+     * @param id  identificador do agendamento
      * @param cliente cliente que agendou
      * @param aula    aula agendada
      * @param data    data da aula
      */
-    public Agendamento(int codigo, Cliente cliente, Aula aula, LocalDate data) {
-        this.codigo = codigo;
+    public Agendamento(int id, Cliente cliente, Aula aula, LocalDate data) {
+        this.id = id;
         this.cliente = cliente;
         this.aula = aula;
         this.data = data;
@@ -150,12 +150,12 @@ public class Agendamento {
     }
 
     /**
-     * Retorna o código do agendamento.
+     * Retorna o identificador do agendamento.
      *
-     * @return o código
+     * @return o identificador
      */
-    public int getCodigo() {
-        return codigo;
+    public int getId() {
+        return id;
     }
 
     /**
@@ -237,7 +237,7 @@ public class Agendamento {
      */
     @Override
     public String toString() {
-        return "Agendamento[codigo=" + codigo + ", cliente=" + cliente.getNome() + ", aula=" + aula.getNome()
+        return "Agendamento[id=" + id + ", cliente=" + cliente.getNome() + ", aula=" + aula.getNome()
                 + ", data=" + data + ", horario=" + aula.getHorario() + ", valor=R$ " + String.format("%.2f", valor)
                 + ", status=" + status + "]";
     }

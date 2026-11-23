@@ -13,8 +13,8 @@ import java.time.LocalDate;
  */
 public class Despesa {
 
-    /** Código da despesa, gerado pelo Financeiro. */
-    private int codigo;
+    /** Identificador da despesa, gerado pelo Financeiro. */
+    private int id;
 
     /** Data da despesa. */
     private LocalDate data;
@@ -28,32 +28,32 @@ public class Despesa {
     /**
      * Cria uma despesa.
      *
-     * @param codigo    código da despesa
+     * @param id    identificador da despesa
      * @param data      data da despesa
      * @param descricao descrição do gasto
      * @param valor     valor gasto
      * @throws IllegalArgumentException se faltar a descrição ou o valor não for positivo
      */
-    public Despesa(int codigo, LocalDate data, String descricao, double valor) {
+    public Despesa(int id, LocalDate data, String descricao, double valor) {
         if (descricao == null || descricao.isBlank()) {
             throw new IllegalArgumentException("A descrição da despesa é obrigatória.");
         }
         if (valor <= 0) {
             throw new IllegalArgumentException("O valor da despesa deve ser positivo.");
         }
-        this.codigo = codigo;
+        this.id = id;
         this.data = data;
         this.descricao = descricao;
         this.valor = valor;
     }
 
     /**
-     * Retorna o código da despesa.
+     * Retorna o identificador da despesa.
      *
-     * @return o código
+     * @return o identificador
      */
-    public int getCodigo() {
-        return codigo;
+    public int getId() {
+        return id;
     }
 
     /**
@@ -86,11 +86,11 @@ public class Despesa {
     /**
      * Retorna a despesa em texto.
      *
-     * @return código, data, descrição e valor
+     * @return identificador, data, descrição e valor
      */
     @Override
     public String toString() {
-        return "Despesa " + codigo + " | " + data + " | " + descricao
+        return "Despesa " + id + " | " + data + " | " + descricao
                 + " | R$ " + String.format("%.2f", valor);
     }
 }

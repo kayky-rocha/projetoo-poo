@@ -30,38 +30,38 @@ public class Financeiro {
     /** Todas as despesas lançadas. */
     private ArrayList<Despesa> despesas = new ArrayList<>();
 
-    /** Próximo código de pagamento. */
-    private int proximoCodigo = 1;
+    /** Próximo identificador de pagamento. */
+    private int proximoId = 1;
 
-    /** Próximo código de despesa. */
-    private int proximoCodigoDespesa = 1;
+    /** Próximo identificador de despesa. */
+    private int proximoIdDespesa = 1;
 
     /**
-     * Registra um pagamento e gera o código dele.
+     * Registra um pagamento e gera o identificador dele.
      *
      * @param pagamento pagamento a registrar
-     * @return o código gerado
+     * @return o identificador gerado
      * @throws IllegalArgumentException se o pagamento for nulo
      */
     public int registrarPagamento(Pagamento pagamento) {
         if (pagamento == null) {
             throw new IllegalArgumentException("Pagamento não pode ser nulo.");
         }
-        pagamento.setId(proximoCodigo);
-        proximoCodigo++;
+        pagamento.setId(proximoId);
+        proximoId++;
         pagamentos.add(pagamento);
         return pagamento.getId();
     }
 
     /**
-     * Busca um pagamento pelo código.
+     * Busca um pagamento pelo identificador.
      *
-     * @param codigo código do pagamento
+     * @param id identificador do pagamento
      * @return o pagamento, ou {@code null} se não existir
      */
-    public Pagamento buscarPagamento(int codigo) {
+    public Pagamento buscarPagamento(int id) {
         for (Pagamento p : pagamentos) {
-            if (p.getId() == codigo) {
+            if (p.getId() == id) {
                 return p;
             }
         }
@@ -77,8 +77,8 @@ public class Financeiro {
      * @return a despesa criada
      */
     public Despesa registrarDespesa(String descricao, double valor, LocalDate data) {
-        Despesa despesa = new Despesa(proximoCodigoDespesa, data, descricao, valor);
-        proximoCodigoDespesa++;
+        Despesa despesa = new Despesa(proximoIdDespesa, data, descricao, valor);
+        proximoIdDespesa++;
         despesas.add(despesa);
         return despesa;
     }
