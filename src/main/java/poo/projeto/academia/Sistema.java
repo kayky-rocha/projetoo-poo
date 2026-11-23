@@ -2,6 +2,7 @@ package poo.projeto.academia;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import poo.projeto.academia.controller.Agenda;
 import poo.projeto.academia.controller.Financeiro;
 import poo.projeto.academia.controller.GerenciarClientes;
@@ -13,6 +14,7 @@ import poo.projeto.academia.controller.acesso.CatracaAula;
 import poo.projeto.academia.controller.acesso.ConfigurarAcesso;
 import poo.projeto.academia.enums.OrigemPagamento;
 import poo.projeto.academia.enums.TipoPagamento;
+import poo.projeto.academia.enums.TipoSala;
 import poo.projeto.academia.model.Administrador;
 import poo.projeto.academia.model.Agendamento;
 import poo.projeto.academia.model.Balanco;
@@ -21,6 +23,8 @@ import poo.projeto.academia.model.Despesa;
 import poo.projeto.academia.model.Extrato;
 import poo.projeto.academia.model.Funcionario;
 import poo.projeto.academia.model.Pagamento;
+import poo.projeto.academia.model.Produto;
+import poo.projeto.academia.model.Sala;
 import poo.projeto.academia.model.Venda;
 
 /**
@@ -45,6 +49,32 @@ public class Sistema {
 
     /** Valor da mensalidade. */
     public static final double VALOR_MENSALIDADE = 150.0;
+
+    /**
+     * Contador de clientes criados, com {@code private static}.
+     * <p>
+     * Só a classe {@code Sistema} mexe nele diretamente. Quem está fora usa
+     * {@link #getTotalClientes()} e {@link #setTotalClientes(int)}.
+     */
+    private static int totalClientes = 0;
+
+    /**
+     * Contador de clientes criados, com {@code protected static}.
+     * <p>
+     * Pode ser lido e alterado direto pelas subclasses de {@code Sistema} e
+     * pelas classes do mesmo pacote, sem passar por método.
+     */
+    protected static int totalClientesProtegido = 0;
+
+    /** As 4 salas da academia, criadas uma única vez e guardadas de forma estática. */
+    private static final ArrayList<Sala> SALAS = new ArrayList<>();
+
+    static {
+        SALAS.add(new Sala(1, TipoSala.SPINNING, 15));
+        SALAS.add(new Sala(2, TipoSala.MUSCULACAO, 30));
+        SALAS.add(new Sala(3, TipoSala.FIT_DANCE, 20));
+        SALAS.add(new Sala(4, TipoSala.PILATES, 10));
+    }
 
     /** Cadastro de clientes. */
     private GerenciarClientes gerenciarClientes;
@@ -462,6 +492,72 @@ public class Sistema {
      */
     public Financeiro getFinanceiro() {
         return financeiro;
+    }
+
+    /**
+     * Retorna as 4 salas da academia.
+     *
+     * @return cópia da lista de salas
+     */
+    public static ArrayList<Sala> getSalas() {
+        return new ArrayList<>(SALAS);
+    }
+
+    /**
+     * Busca a sala de um tipo de atividade.
+     *
+     * @param tipo tipo de atividade
+     * @return a sala, ou {@code null} se não houver
+     */
+    public static Sala buscarSala(TipoSala tipo) {
+        for (Sala sala : SALAS) {
+            if (sala.getTipo() == tipo) {
+                return sala;
+            }
+        }
+        return null;
+    }
+    
+
+    /**
+     * Registra que um cliente foi criado, somando 1 nos dois contadores.
+     * <p>
+     * Chamado pelo construtor de {@code Cliente}, para contar cada instância criada.
+     */
+    public static void contarCliente() {
+        totalClientes++;
+        totalClientesProtegido++;
+    }
+
+    /**
+     * Retorna quantos clientes já foram criados.
+     *
+     * @return o valor do contador {@code private static}
+     */
+    public static int getTotalClientes() {
+        return totalClientes;
+    }
+
+    /**
+     * Altera o contador de clientes criados.
+     *
+     * @param total o novo valor
+     * @throws IllegalArgumentException se for negativo
+     */
+    public static void setTotalClientes(int total) {
+        if (total < 0) {
+            throw new IllegalArgumentException("O total de clientes não pode ser negativo.");
+        }
+        totalClientes = total;
+    }
+
+    /**
+     * Conta as instâncias criadas de {@code Cliente} e de {@code Produto}.
+     *
+     * @return texto com os dois totais
+     */
+    public static String contarInstancias() {
+        return "Clientes criados: " + totalClientes + " | Produtos criados: " + Produto.getTotalProdutos();
     }
 
     /**

@@ -8,9 +8,14 @@ import poo.projeto.academia.controller.acesso.ValidadorAcesso;
 import poo.projeto.academia.controller.acesso.ResultadoAcesso;
 import poo.projeto.academia.enums.OrigemPagamento;
 import poo.projeto.academia.enums.TipoPlano;
+import poo.projeto.academia.enums.CategoriaLanchonete;
 import poo.projeto.academia.enums.TipoPagamento;
+import poo.projeto.academia.enums.TipoSala;
 import poo.projeto.academia.model.Cliente;
+import poo.projeto.academia.model.ItemCardapio;
 import poo.projeto.academia.model.Pagamento;
+import poo.projeto.academia.model.ProdutoLoja;
+import poo.projeto.academia.model.Sala;
 
 /**
  * Ponto de entrada do Sistema de Gerenciamento de Academia.
@@ -68,6 +73,39 @@ public class Main {
         testar(catraca, diarista);
         testar(catraca, semConfirmar);
         testar(catraca, naoCadastrado);
+
+        testarSalas();
+        testarContadores();
+    }
+
+    /**
+     * Testa as 4 salas estáticas do Sistema.
+     */
+    private static void testarSalas(){
+        System.out.println("\n=== Salas ===");
+        for (Sala sala : Sistema.getSalas()){
+            System.out.println(sala);
+        }
+        System.out.println("Sala de pilates: " + Sistema.buscarSala(TipoSala.PILATES));
+    }
+
+    /**
+     * Testa os contadores estáticos de Cliente e o método de classe que conta instâncias.
+     */
+    private static void testarContadores() {
+        System.out.println("\n=== CONTADORES ===");
+        new ProdutoLoja("Whey 900g", 120.0, 5, "Suplemento");
+        new ItemCardapio("Suco de laranja", 8.0, CategoriaLanchonete.BEBIDA);
+
+        System.out.println("private static (via get): " + Sistema.getTotalClientes());
+        System.out.println("protected static (direto, mesmo pacote): " + Sistema.totalClientesProtegido);
+        System.out.println(Sistema.contarInstancias());
+
+        try {
+            Sistema.setTotalClientes(-1);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro esperado: " + e.getMessage());
+        }
     }
 
     /**

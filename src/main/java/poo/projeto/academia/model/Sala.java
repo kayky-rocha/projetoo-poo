@@ -6,11 +6,11 @@ import poo.projeto.academia.enums.TipoSala;
  * Sala de exercícios da academia.
  * <p>
  * As 4 salas da academia são criadas uma única vez e armazenadas de forma
- * estática na classe {@link Sistema} (item 5 do trabalho).
+ * estática na classe {@link poo.projeto.academia.Sistema} (item 5 do trabalho).
  *
  * @author Kayky Francisco Rodrigues da Rocha
  * @author Aaron Araujo Agapito Guedes
- * @see Sistema#getSalas()
+ * @see poo.projeto.academia.Sistema#getSalas()
  */
 public class Sala {
 

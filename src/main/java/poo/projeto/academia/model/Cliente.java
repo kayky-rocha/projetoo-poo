@@ -1,6 +1,7 @@
 package poo.projeto.academia.model;
 
 import java.util.ArrayList;
+import poo.projeto.academia.Sistema;
 import poo.projeto.academia.enums.OrigemPagamento;
 import poo.projeto.academia.enums.TipoPlano;
 
@@ -45,6 +46,7 @@ public class Cliente extends Pessoa {
         super.setEndereco(endereco);
         this.id = id;
         this.plano = plano;
+        Sistema.contarCliente();
     }
 
     /**
