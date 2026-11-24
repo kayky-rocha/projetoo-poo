@@ -53,8 +53,7 @@ public class Agenda {
             throw new IllegalArgumentException("Aula lotada nesta data.");
         }
 
-        Agendamento agendamento = new Agendamento(proximoId, cliente, aula, data);
-        proximoId = proximoId + 1;
+        Agendamento agendamento = new Agendamento(proximoId++, cliente, aula, data);
         agendamentos.add(agendamento);
         return agendamento;
     }
@@ -126,22 +125,6 @@ public class Agenda {
             }
         }
         return resultado;
-    }
-
-    /**
-     * Diz se o cliente tem algum agendamento confirmado na data.
-     *
-     * @param cliente cliente procurado
-     * @param data    dia a verificar
-     * @return {@code true} se tiver agendamento confirmado nesse dia
-     */
-    public boolean temAgendamentoConfirmado(Cliente cliente, LocalDate data) {
-        for (Agendamento a : listarPorCliente(cliente)) {
-            if (a.getData().equals(data) && a.getStatus() == StatusAgendamento.CONFIRMADO) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**

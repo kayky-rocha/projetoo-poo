@@ -145,10 +145,14 @@ public class Catraca {
             return registrarEntrada(cliente, evento.getDataHora());
         }
 
-        if (registrarSaida(cliente, evento.getDataHora())) {
-            return new ResultadoAcesso(true, "Saída registrada.");
+        if (evento.getTipo() == TipoEvento.SAIDA) {
+            if (registrarSaida(cliente, evento.getDataHora())) {
+                return new ResultadoAcesso(true, "Saída registrada.");
+            }
+            return new ResultadoAcesso(false, "Cliente não está na academia.");
         }
-        return new ResultadoAcesso(false, "Cliente não está na academia.");
+
+        return new ResultadoAcesso(false, "Tipo de evento inválido.");
     }
 
     /**

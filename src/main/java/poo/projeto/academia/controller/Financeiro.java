@@ -24,6 +24,12 @@ import poo.projeto.academia.model.Pagamento;
  */
 public class Financeiro {
 
+    /**
+     * Cria o financeiro sem pagamentos e sem despesas.
+     */
+    public Financeiro() {
+    }
+
     /** Todos os pagamentos recebidos. */
     private ArrayList<Pagamento> pagamentos = new ArrayList<>();
 
@@ -47,8 +53,7 @@ public class Financeiro {
         if (pagamento == null) {
             throw new IllegalArgumentException("Pagamento não pode ser nulo.");
         }
-        pagamento.setId(proximoId);
-        proximoId++;
+        pagamento.setId(proximoId++);
         pagamentos.add(pagamento);
         return pagamento.getId();
     }
@@ -77,8 +82,7 @@ public class Financeiro {
      * @return a despesa criada
      */
     public Despesa registrarDespesa(String descricao, double valor, LocalDate data) {
-        Despesa despesa = new Despesa(proximoIdDespesa, data, descricao, valor);
-        proximoIdDespesa++;
+        Despesa despesa = new Despesa(proximoIdDespesa++, data, descricao, valor);
         despesas.add(despesa);
         return despesa;
     }
