@@ -6,8 +6,12 @@ package poo.projeto.academia.enums;
  * @author Aaron Araujo Agapito Guedes
  */
 public enum TipoPagamento {
-    /** Pagamento físico. */
+    /** Pagamento em dinheiro. */
     DINHEIRO,
-    /** Pagamento virtual. */
-    CREDITO, DEBITO, PIX
+    /** Pagamento no cartão de crédito. */
+    CREDITO,
+    /** Pagamento no cartão de débito. */
+    DEBITO,
+    /** Pagamento por Pix. */
+    PIX
 }

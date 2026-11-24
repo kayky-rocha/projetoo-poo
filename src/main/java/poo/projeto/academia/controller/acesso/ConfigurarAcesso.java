@@ -16,7 +16,13 @@ import poo.projeto.academia.controller.GerenciarClientes;
  * @see Catraca
  */
 public class ConfigurarAcesso {
-    
+
+    /**
+     * Cria o configurador. Os métodos são estáticos, então não é preciso criar objetos desta classe.
+     */
+    public ConfigurarAcesso() {
+    }
+
     /**
      * Monta a cadeia da entrada na academia: cadastro, mensalidade e diária.
      * <p>

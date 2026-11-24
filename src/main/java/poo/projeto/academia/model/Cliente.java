@@ -111,10 +111,10 @@ public class Cliente extends Pessoa {
     }
 
      /**
-     * Busca o pagamento mais recente de uma forma de cobrança.
+     * Busca o pagamento mais recente de uma origem (por exemplo, MENSALIDADE ou DIARIA).
      *
-     * @param tipo forma de cobrança a filtrar
-     * @return o pagamento mais recente daquele tipo, ou {@code null} se não houver
+     * @param origem origem do pagamento a filtrar
+     * @return o pagamento mais recente dessa origem, ou {@code null} se não houver
      */
     public Pagamento ultimoPagamento(OrigemPagamento origem) {
         Pagamento ultimo = null;

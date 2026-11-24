@@ -16,6 +16,12 @@ import poo.projeto.academia.model.VendaLojinha;
  */
 public class Lojinha {
 
+    /**
+     * Cria a lojinha sem produtos e sem vendas.
+     */
+    public Lojinha() {
+    }
+
     /** Produtos à venda. */
     private ArrayList<ProdutoLoja> produtos = new ArrayList<>();
 

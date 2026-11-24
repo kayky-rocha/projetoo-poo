@@ -16,6 +16,12 @@ import poo.projeto.academia.model.VendaLanchonete;
  */
 public class Lanchonete {
 
+    /**
+     * Cria a lanchonete com o cardápio vazio.
+     */
+    public Lanchonete() {
+    }
+
     /** Itens do cardápio. */
     private ArrayList<ItemCardapio> cardapio = new ArrayList<>();
 

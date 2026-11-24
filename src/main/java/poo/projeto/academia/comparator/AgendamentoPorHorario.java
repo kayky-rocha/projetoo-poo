@@ -16,6 +16,13 @@ import poo.projeto.academia.model.Agendamento;
 public class AgendamentoPorHorario implements Comparator< Agendamento >
 {
     /**
+     * Cria o comparador por horário.
+     */
+    public AgendamentoPorHorario()
+    {
+    }
+
+    /**
      * Compara dois agendamentos pelo horário (hora e minuto) e se empatar, pela data
      *
      * @param agendamento1 primeiro agendamento

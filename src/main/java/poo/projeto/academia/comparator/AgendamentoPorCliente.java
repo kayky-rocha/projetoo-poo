@@ -16,6 +16,13 @@ import poo.projeto.academia.model.Agendamento;
 public class AgendamentoPorCliente implements Comparator< Agendamento >
 {
     /**
+     * Cria o comparador pelo nome do cliente.
+     */
+    public AgendamentoPorCliente()
+    {
+    }
+
+    /**
      * Compara dois agendamentos pelo nome do cliente e, no empate, pela data.
      *
      * @param agendamento1 primeiro agendamento
