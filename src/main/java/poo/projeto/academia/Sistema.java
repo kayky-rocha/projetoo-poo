@@ -38,6 +38,25 @@ import poo.projeto.academia.model.Venda;
  * funcionário logado atende clientes, agenda aulas, vende e lança despesas.
  * Só o administrador cadastra, edita e remove funcionários, altera a senha
  * de um administrador e gera o balanço mensal.
+ * <p>
+ * <b>Contadores de Cliente: {@code private static} ou {@code protected static}</b>
+ * <p>
+ * A classe tem dois contadores estáticos que contam quantos clientes foram criados,
+ * um de cada jeito, para comparar as duas estratégias:
+ * <ul>
+ *   <li><b>{@code private static} com get e set</b> ({@link #getTotalClientes()}).
+ *       Vantagens: encapsulamento. Só a classe mexe no valor diretamente, o
+ *       {@code set} pode validar (não aceita número negativo) e a implementação
+ *       pode mudar sem afetar quem usa. Desvantagens: mais código (os métodos),
+ *       e as outras classes precisam chamar o {@code get}.</li>
+ *   <li><b>{@code protected static}</b> ({@link #totalClientesProtegido}).
+ *       Vantagens: menos código, e as subclasses e as classes do mesmo pacote
+ *       acessam direto. Desvantagens: quebra o encapsulamento. Qualquer subclasse
+ *       ou classe do pacote pode alterar o contador sem controle nem validação,
+ *       o que dificulta a manutenção.</li>
+ * </ul>
+ * Conclusão: o {@code private static} com get e set é a opção mais segura e é a
+ * que o sistema usa no {@link #contarInstancias()}.
  *
  * @author Kayky Francisco Rodrigues da Rocha
  * @author Aaron Araujo Agapito Guedes
