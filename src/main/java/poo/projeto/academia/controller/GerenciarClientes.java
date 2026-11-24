@@ -1,6 +1,8 @@
 package poo.projeto.academia.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 import poo.projeto.academia.model.Cliente;
 
@@ -109,6 +111,21 @@ public class GerenciarClientes {
      */
     public ArrayList<Cliente> listarClientes() {
         return new ArrayList<>(clientes);
+    }
+
+    /**
+     * Lista os clientes em uma ordem escolhida.
+     * <p>
+     * Usa o {@link Collections#sort} com um objeto Comparator, como
+     * {@code new ClientePorNome()}. A lista original não muda.
+     *
+     * @param comparador define a ordem da lista
+     * @return cópia da lista de clientes, já ordenada
+     */
+    public ArrayList<Cliente> listarClientes(Comparator<Cliente> comparador) {
+        ArrayList<Cliente> lista = new ArrayList<>(clientes);
+        Collections.sort(lista, comparador);
+        return lista;
     }
 
     /**
