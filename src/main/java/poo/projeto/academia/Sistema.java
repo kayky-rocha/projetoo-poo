@@ -209,6 +209,20 @@ public class Sistema {
         }
     }
 
+     /**
+     * Emite a nota fiscal de um pagamento já registrado no financeiro e,
+     * se houver cliente, guarda o id da nota nele.
+     *
+     * @param pagamento pagamento já registrado
+     * @param cliente   cliente do pagamento, ou {@code null} na venda de balcão
+     */
+    private void emitirNota(Pagamento pagamento, Cliente cliente) {
+        int idNota = financeiro.emitirNota(pagamento, cliente);
+        if (cliente != null) {
+            cliente.adicionarNota(idNota);
+        }
+    }
+
     /**
      * Cadastra um cliente. Qualquer funcionário logado pode.
      *
@@ -347,6 +361,7 @@ public class Sistema {
                 VALOR_DIARIA, LocalDate.now());
         cliente.registrarPagamento(pagamento);
         financeiro.registrarPagamento(pagamento);
+        emitirNota(pagamento, cliente);
         return pagamento;
     }
 
@@ -364,6 +379,7 @@ public class Sistema {
                 VALOR_MENSALIDADE, LocalDate.now());
         cliente.registrarPagamento(pagamento);
         financeiro.registrarPagamento(pagamento);
+        emitirNota(pagamento, cliente);
         return pagamento;
     }
 
@@ -379,7 +395,9 @@ public class Sistema {
     public Extrato finalizarVenda(Venda venda, TipoPagamento forma) {
         exigirLogin();
         Extrato extrato = venda.finalizar(forma);
-        financeiro.registrarPagamento(venda.getPagamento());
+        Pagamento pagamento = venda.getPagamento();
+        financeiro.registrarPagamento(pagamento);
+        emitirNota(pagamento, pagamento.getCliente());
         return extrato;
     }
 
@@ -403,6 +421,7 @@ public class Sistema {
         Pagamento pagamento = agendamento.getPagamento();
         cliente.registrarPagamento(pagamento);
         financeiro.registrarPagamento(pagamento);
+        emitirNota(pagamento, cliente);
 
         String descricao = "Aula " + agendamento.getAula().getNome() + " em " + agendamento.getData()
                 + " às " + agendamento.getAula().getHorario() + "\n";
@@ -437,8 +456,38 @@ public class Sistema {
                     -reembolso, LocalDate.now());
             cliente.registrarPagamento(cancelamento);
             financeiro.registrarPagamento(cancelamento);
+            emitirNota(cancelamento, cliente);
         }
         return reembolso;
+    }
+
+    /**
+     * Cancela a matrícula de um cliente, usando a data de hoje.
+     * <p>
+     * O cadastro continua guardado no sistema. O cancelamento só é
+     * permitido se o cliente não tiver mensalidade pendente.
+     *
+     * @param cliente cliente que cancela a matrícula
+     * @throws IllegalStateException    se ninguém fez login
+     * @throws IllegalArgumentException se houver pendência
+     */
+    public void cancelarMatricula(Cliente cliente) {
+        cancelarMatricula(cliente, LocalDate.now());
+    }
+
+    /**
+     * Cancela a matrícula de um cliente, comparando a pendência com a data informada.
+     * <p>
+     * Serve para testar o cancelamento com a mensalidade vencida.
+     *
+     * @param cliente cliente que cancela a matrícula
+     * @param hoje    data usada para verificar a pendência
+     * @throws IllegalStateException    se ninguém fez login
+     * @throws IllegalArgumentException se houver pendência
+     */
+    public void cancelarMatricula(Cliente cliente, LocalDate hoje) {
+        exigirLogin();
+        cliente.cancelarMatricula(hoje);
     }
 
     /**
