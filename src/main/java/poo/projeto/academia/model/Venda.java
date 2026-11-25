@@ -41,6 +41,20 @@ public abstract class Venda {
     private Extrato extrato;
 
     /**
+     * Sobe o contador para o maior id carregado do JSON.
+     * <p>
+     * Sem isso, o contador recomeça do 0 quando o programa abre, e uma venda
+     * nova receberia o mesmo id de uma venda carregada. Só aumenta o contador, nunca diminui.
+     *
+     * @param maiorIdCarregado maior id entre as vendas carregadas
+     */
+    public static void atualizarTotalVendas(int maiorIdCarregado){
+        if(maiorIdCarregado > totalVendas){
+            totalVendas = maiorIdCarregado;
+        }
+    }
+
+    /**
      * Cria uma venda vazia.
      *
      * @param cliente cliente da venda, ou {@code null} na venda de balcão

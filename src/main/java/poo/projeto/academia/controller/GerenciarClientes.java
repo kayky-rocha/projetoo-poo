@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Objects;
 import poo.projeto.academia.model.Cliente;
+import poo.projeto.academia.model.Extrato;
 
 /**
  * Gerencia o cadastro de clientes da academia.
@@ -172,6 +173,9 @@ public class GerenciarClientes {
         for (Cliente c : clientes) {
             if (c.getId() >= proximoId) {
                 proximoId = c.getId() + 1;
+            }
+            for (Extrato e : c.getExtratos()){
+                Extrato.atualizarTotalExtratos(e.getId());
             }
         }
     }

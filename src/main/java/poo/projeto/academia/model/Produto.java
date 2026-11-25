@@ -53,6 +53,20 @@ public class Produto {
     }
 
     /**
+     * Sobe o contador para o maior id carregado do JSON.
+     * <p>
+     * Sem isso, o contador recomeça do 0 quando o programa abre, e um produto
+     * novo receberia o mesmo id de um produto carregado. Só aumenta o contador, nunca diminui.
+     *
+     * @param maiorIdCarregado maior id entre os produtos carregados
+     */
+    public static void atualizarTotalProdutos(int maiorIdCarregado){
+        if (maiorIdCarregado > totalProdutos){
+            totalProdutos = maiorIdCarregado;
+        }
+    }
+
+    /**
      * Retorna o identificador do produto.
      *
      * @return o identificador

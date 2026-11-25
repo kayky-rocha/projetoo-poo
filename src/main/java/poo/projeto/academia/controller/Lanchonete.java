@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import poo.projeto.academia.model.Cliente;
 import poo.projeto.academia.model.ItemCardapio;
 import poo.projeto.academia.model.VendaLanchonete;
+import poo.projeto.academia.model.Extrato;
+import poo.projeto.academia.model.Produto;
+import poo.projeto.academia.model.Venda;
 
 /**
  * Subsistema da lanchonete: cardápio e pedidos.
@@ -129,6 +132,15 @@ public class Lanchonete {
     public void restaurar(ArrayList<ItemCardapio> listaCardapio, ArrayList<VendaLanchonete> listaPedidos) {
         cardapio = listaCardapio;
         vendas = listaPedidos;
+        for (ItemCardapio i : cardapio){
+            Produto.atualizarTotalProdutos(i.getId());
+        }
+        for (VendaLanchonete v : vendas){
+            Venda.atualizarTotalVendas(v.getId());
+            if (v.getExtrato() != null){
+                Extrato.atualizarTotalExtratos(v.getExtrato().getId());
+            }
+        }
     }
 
     /**

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import poo.projeto.academia.model.Cliente;
 import poo.projeto.academia.model.ProdutoLoja;
 import poo.projeto.academia.model.VendaLojinha;
+import poo.projeto.academia.model.Extrato;
+import poo.projeto.academia.model.Produto;
+import poo.projeto.academia.model.Venda;
 
 /**
  * Subsistema da lojinha: cadastro de produtos, estoque e vendas.
@@ -151,8 +154,9 @@ public class Lojinha {
         return new ArrayList<>(vendas);
     }
 
-    /**
+     /**
      * Troca os produtos e as vendas pelos que foram carregados do JSON.
+     * Também sobe os contadores de id de produto, venda e extrato, para os próximos não repetirem ids.
      *
      * @param listaProdutos produtos carregados, com o estoque de cada um
      * @param listaVendas   vendas carregadas
@@ -160,6 +164,15 @@ public class Lojinha {
     public void restaurar(ArrayList<ProdutoLoja> listaProdutos, ArrayList<VendaLojinha> listaVendas) {
         produtos = listaProdutos;
         vendas = listaVendas;
+        for (ProdutoLoja p : produtos){
+            Produto.atualizarTotalProdutos(p.getId());
+        }
+        for (VendaLojinha v : vendas){
+            Venda.atualizarTotalVendas(v.getId());
+            if (v.getExtrato() != null){
+                Extrato.atualizarTotalExtratos(v.getExtrato().getId());
+            }
+        }
     }
 
     /**

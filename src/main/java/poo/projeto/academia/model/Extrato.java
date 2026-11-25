@@ -44,6 +44,20 @@ public class Extrato {
     private TipoPagamento forma;
 
     /**
+     * Sobe o contador para o maior id carregado do JSON.
+     * <p>
+     * Sem isso, o contador recomeça do 0 quando o programa abre, e um extrato
+     * novo receberia o mesmo id de um extrato carregado. Só aumenta o contador, nunca diminui.
+     *
+     * @param maiorIdCarregado maior id entre os extratos carregados
+     */
+    public static void atualizarTotalExtratos(int maiorIdCarregado){
+        if(maiorIdCarregado > totalExtratos){
+            totalExtratos = maiorIdCarregado;
+        }
+    }
+
+    /**
      * Cria um extrato.
      *
      * @param data       data e hora da compra
