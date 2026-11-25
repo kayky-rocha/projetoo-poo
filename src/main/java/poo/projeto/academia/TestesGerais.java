@@ -196,7 +196,7 @@ public class TestesGerais {
         System.out.println("Marta remover a si mesma: " + sistema.removerFuncionario(idMarta));
         System.out.println("Remover o Rui: " + sistema.removerFuncionario(rui.getId()));
         System.out.println("Remover de novo: " + sistema.removerFuncionario(rui.getId()));
-        System.out.println("Total de funcionários: " + gerenciar.listarFuncionarios().size());
+        System.out.println("Total de funcionários (esperado 2): " + gerenciar.listarFuncionarios().size());
         sistema.logout();
     }
 
@@ -217,6 +217,20 @@ public class TestesGerais {
         sistema.registrarMensalidade(bia, TipoPagamento.PIX);
         sistema.registrarDiaria(caio, TipoPagamento.DINHEIRO);
 
+        // 0. Histórico de 2025, como se tivesse vindo do JSON: 2 entradas em março e 1 em julho.
+        //    Datas fixas, para o resultado dos relatórios não mudar com o dia em que o teste roda.
+        ArrayList<RegistroCatraca> historico = new ArrayList<>();
+        RegistroCatraca marco1 = new RegistroCatraca(bia, LocalDateTime.of(2025, 3, 10, 7, 0));
+        marco1.registrarSaida(LocalDateTime.of(2025, 3, 10, 8, 30));
+        RegistroCatraca marco2 = new RegistroCatraca(caio, LocalDateTime.of(2025, 3, 20, 18, 0));
+        marco2.registrarSaida(LocalDateTime.of(2025, 3, 20, 19, 0));
+        RegistroCatraca julho = new RegistroCatraca(bia, LocalDateTime.of(2025, 7, 5, 9, 0));
+        julho.registrarSaida(LocalDateTime.of(2025, 7, 5, 10, 0));
+        historico.add(marco1);
+        historico.add(marco2);
+        historico.add(julho);
+        catraca.restaurarRegistros(historico);
+
         // 1. Entrada e saída direto na catraca
         LocalDateTime hoje8h = LocalDate.now().atTime(8, 0);
         System.out.println("Bia entra: " + catraca.registrarEntrada(bia, hoje8h).getMotivo());
@@ -233,24 +247,27 @@ public class TestesGerais {
         System.out.println("Evento de saída sem entrada: " + catraca.receberEvento(saida).getMotivo());
         System.out.println("Evento de cliente id 99: " + catraca.receberEvento(desconhecido).getMotivo());
 
-        // 3. Registros de outros dias, para os relatórios mensal e anual
-        LocalDateTime mesPassado = LocalDate.now().minusMonths(1).atTime(18, 0);
-        catraca.registrarEntrada(bia, mesPassado);
-        catraca.registrarSaida(bia, mesPassado.plusMinutes(90));
-
-        // 4. Relatórios
+        // 3. Relatórios: hoje tem 2 registros (Bia e Caio); 2025 tem os 3 do histórico
         LocalDate hoje = LocalDate.now();
         ArrayList<RegistroCatraca> diario = catraca.relatorioDiario(hoje);
-        ArrayList<RegistroCatraca> mensal = catraca.relatorioMensal(hoje.getYear(), hoje.getMonthValue());
-        ArrayList<RegistroCatraca> anual = catraca.relatorioAnual(hoje.getYear());
-        System.out.println("Relatório diário (" + diario.size() + " registros):");
+        System.out.println("Relatório diário de hoje (esperado 2): " + diario.size());
         for (RegistroCatraca r : diario) {
             System.out.println("  " + r);
         }
-        System.out.println("Relatório mensal: " + mensal.size() + " registros");
-        System.out.println("Relatório anual: " + anual.size() + " registros");
+        System.out.println("Relatório diário de 10/03/2025 (esperado 1): "
+                + catraca.relatorioDiario(LocalDate.of(2025, 3, 10)).size());
+        System.out.println("Relatório mensal deste mês (esperado 2): "
+                + catraca.relatorioMensal(hoje.getYear(), hoje.getMonthValue()).size());
+        ArrayList<RegistroCatraca> marco = catraca.relatorioMensal(2025, 3);
+        System.out.println("Relatório mensal de março/2025 (esperado 2): " + marco.size());
+        for (RegistroCatraca r : marco) {
+            System.out.println("  " + r);
+        }
+        System.out.println("Relatório anual de 2025 (esperado 3): " + catraca.relatorioAnual(2025).size());
+        System.out.println("Relatório anual deste ano (esperado 2): "
+                + catraca.relatorioAnual(hoje.getYear()).size());
 
-        // 5. CatracaAula: só entra quem tem agendamento confirmado naquela aula
+        // 4. CatracaAula: só entra quem tem agendamento confirmado naquela aula
         CatracaAula catracaAula = sistema.getCatracaAula();
         Aula pilates = new Aula(1, "Pilates", Sistema.buscarSala(TipoSala.PILATES), null,
                 LocalTime.of(19, 0), 40.0, 25.0);
@@ -297,10 +314,10 @@ public class TestesGerais {
         VendaLojinha venda = lojinha.vender(dani);
         venda.adicionarItem(luva, 2);
         venda.adicionarItem(garrafa, 1);
-        System.out.println("Total da venda: " + venda.total());
+        System.out.println("Total da venda (esperado 120.0): " + venda.total());
         Extrato extrato = sistema.finalizarVenda(venda, TipoPagamento.DEBITO);
         extrato.imprimir();
-        System.out.println("Estoque de luvas depois da venda: " + luva.getEstoque());
+        System.out.println("Estoque de luvas depois da venda (esperado 1): " + luva.getEstoque());
 
         // 3. Estoque insuficiente e reposição
         VendaLojinha outra = lojinha.vender(null);
@@ -310,10 +327,10 @@ public class TestesGerais {
             System.out.println("Estoque insuficiente: " + e.getMessage());
         }
         System.out.println("Repor 4 luvas: " + lojinha.reporEstoque(luva.getId(), 4));
-        System.out.println("Estoque de luvas depois de repor: " + luva.getEstoque());
+        System.out.println("Estoque de luvas depois de repor (esperado 5): " + luva.getEstoque());
         outra.adicionarItem(luva, 5);
         sistema.finalizarVenda(outra, TipoPagamento.DINHEIRO);
-        System.out.println("Venda de balcão finalizada: " + outra.total());
+        System.out.println("Venda de balcão finalizada (esperado 225.0): " + outra.total());
 
         // 4. Lanchonete: cardápio, item indisponível e pedido
         ItemCardapio suco = new ItemCardapio("Suco de laranja", 8.0, CategoriaLanchonete.BEBIDA);
@@ -333,14 +350,14 @@ public class TestesGerais {
 
         // 5. Relatórios de vendas (só as finalizadas)
         LocalDate hoje = LocalDate.now();
-        System.out.println("Vendas da lojinha hoje: " + lojinha.relatorioVendas(hoje).size());
+        System.out.println("Vendas da lojinha hoje (esperado 2): " + lojinha.relatorioVendas(hoje).size());
         System.out.println("Vendas da lojinha no mês: "
                 + lojinha.relatorioVendasMes(hoje.getYear(), hoje.getMonthValue()).size());
-        System.out.println("Pedidos da lanchonete hoje: " + lanchonete.relatorioVendas(hoje).size());
+        System.out.println("Pedidos da lanchonete hoje (esperado 1): " + lanchonete.relatorioVendas(hoje).size());
         System.out.println("Pedidos da lanchonete no mês: "
                 + lanchonete.relatorioVendasMes(hoje.getYear(), hoje.getMonthValue()).size());
-        System.out.println("Compras no histórico da Dani: " + dani.getPagamentos().size());
-        System.out.println("Extratos da Dani: " + dani.getExtratos().size());
+        System.out.println("Compras no histórico da Dani (esperado 2): " + dani.getPagamentos().size());
+        System.out.println("Extratos da Dani (esperado 2): " + dani.getExtratos().size());
         sistema.logout();
     }
 
@@ -368,21 +385,21 @@ public class TestesGerais {
         Agendamento aula = sistema.getAgenda().agendar(fia, spinning, hoje.plusDays(1));
         sistema.confirmarAgendamento(aula.getId(), TipoPagamento.CREDITO);
         double reembolso = sistema.cancelarAgendamento(aula.getId());
-        System.out.println("Reembolso do cancelamento: " + reembolso);
+        System.out.println("Reembolso do cancelamento (esperado 10.0, metade da aula de 20.0): " + reembolso);
 
         // 2. Buscar pagamento e somar
         System.out.println("Pagamento da diária: " + financeiro.buscarPagamento(diaria.getId()));
         ArrayList<Pagamento> doDia = financeiro.relatorioVendasDia(hoje);
-        System.out.println("Pagamentos de hoje: " + doDia.size() + ", total líquido: " + financeiro.somar(doDia));
+        System.out.println("Pagamentos de hoje (esperado 4): " + doDia.size() + ", total líquido (esperado 190.0 = 30 + 150 + 20 - 10): " + financeiro.somar(doDia));
         System.out.println("Pagamentos do mês: "
                 + financeiro.relatorioVendasMes(hoje.getYear(), hoje.getMonthValue()).size());
-        System.out.println("Total de AULA no mês: "
+        System.out.println("Total de AULA no mês (esperado 20.0): "
                 + financeiro.totalPorOrigem(OrigemPagamento.AULA, hoje.getYear(), hoje.getMonthValue()));
-        System.out.println("Total de CANCELAMENTO no mês: "
+        System.out.println("Total de CANCELAMENTO no mês (esperado -10.0): "
                 + financeiro.totalPorOrigem(OrigemPagamento.CANCELAMENTO, hoje.getYear(), hoje.getMonthValue()));
 
         // 3. Notas fiscais: uma por pagamento
-        System.out.println("Notas emitidas: " + financeiro.listarNotas().size());
+        System.out.println("Notas emitidas (esperado 4, uma por pagamento): " + financeiro.listarNotas().size());
         for (int id : fia.getIdsNotas()) {
             NotaFiscal nota = financeiro.buscarNota(id);
             System.out.println("  Nota da Fia: " + nota);
@@ -392,7 +409,7 @@ public class TestesGerais {
         Despesa luz = sistema.lancarDespesa("Conta de luz", 400.0);
         sistema.lancarDespesa("Material de limpeza", 80.0);
         System.out.println("Despesa lançada: " + luz);
-        System.out.println("Despesas: " + financeiro.listarDespesas().size());
+        System.out.println("Despesas (esperado 2): " + financeiro.listarDespesas().size());
 
         // 5. Balanço do mês (só o administrador)
         sistema.logout();
@@ -445,17 +462,17 @@ public class TestesGerais {
             return;
         }
         Cliente gilCarregado = carregado.getGerenciarClientes().buscarCliente(gil.getId());
-        System.out.println("Clientes carregados: " + carregado.getGerenciarClientes().listarClientes().size());
+        System.out.println("Clientes carregados (esperado 1): " + carregado.getGerenciarClientes().listarClientes().size());
         System.out.println("Cliente carregado: " + gilCarregado.getNome()
                 + ", pagamentos: " + gilCarregado.getPagamentos().size()
                 + ", notas: " + gilCarregado.getIdsNotas().size());
-        System.out.println("Funcionários carregados: " + carregado.getGerenciarFuncionarios().listarFuncionarios().size());
+        System.out.println("Funcionários carregados (esperado 2): " + carregado.getGerenciarFuncionarios().listarFuncionarios().size());
         System.out.println("O login funciona depois de carregar? " + carregado.login("paulo", "456"));
-        System.out.println("Estoque da toalha carregado: "
+        System.out.println("Estoque da toalha carregado (esperado 5): "
                 + carregado.getLojinha().buscarProduto(toalha.getId()).getEstoque());
-        System.out.println("Pagamentos carregados: " + carregado.getFinanceiro().listarPagamentos().size());
-        System.out.println("Notas carregadas: " + carregado.getFinanceiro().listarNotas().size());
-        System.out.println("Registros da catraca carregados: " + carregado.getCatraca().listarRegistros().size());
+        System.out.println("Pagamentos carregados (esperado 2): " + carregado.getFinanceiro().listarPagamentos().size());
+        System.out.println("Notas carregadas (esperado 2): " + carregado.getFinanceiro().listarNotas().size());
+        System.out.println("Registros da catraca carregados (esperado 1): " + carregado.getCatraca().listarRegistros().size());
 
         // 3. Teste dos ids: os novos não podem repetir os carregados
         int maiorProduto = 0;
