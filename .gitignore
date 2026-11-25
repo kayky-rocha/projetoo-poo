@@ -3,6 +3,7 @@
 out/
 bin/
 target/
+dados-teste/
 
 # VS Code
 .vscode/
