@@ -104,12 +104,24 @@ public class Produto {
         return preco;
     }
 
+    /**
+     * Confere se o nome do produto foi informado.
+     *
+     * @param nome nome do produto
+     * @throws IllegalArgumentException se o nome for nulo ou vazio
+     */
     private static void validarNome(String nome) {
         if (nome == null || nome.isBlank()){
             throw new IllegalArgumentException("Nome do produto é obrigatório.");
         }
     }
 
+    /**
+     * Confere se o preço do produto é maior que zero.
+     *
+     * @param preco preço unitário
+     * @throws IllegalArgumentException se o preço for zero ou negativo
+     */
     private static void validarPreco(double preco) {
         if (preco <= 0) {
             throw new IllegalArgumentException("Preço do produto deve ser positivo.");
