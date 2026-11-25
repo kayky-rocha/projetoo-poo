@@ -160,6 +160,23 @@ public class GerenciarClientes {
     }
 
     /**
+     * Troca a lista de clientes pela que foi carregada do JSON.
+     * <p>
+     * O próximo id passa a ser o maior id da lista mais 1, para não repetir.
+     *
+     * @param lista clientes carregados
+     */
+    public void restaurar(ArrayList<Cliente> lista) {
+        clientes = lista;
+        proximoId = 1;
+        for (Cliente c : clientes) {
+            if (c.getId() >= proximoId) {
+                proximoId = c.getId() + 1;
+            }
+        }
+    }
+
+    /**
      * Retorna o cadastro de clientes em texto.
      *
      * @return o objeto em texto

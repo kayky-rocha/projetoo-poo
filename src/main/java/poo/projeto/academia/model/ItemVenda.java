@@ -50,6 +50,17 @@ public class ItemVenda {
     }
 
     /**
+     * Altera o produto do item.
+     * <p>
+     * Usado pela persistência em JSON para religar o objeto ao carregar os dados.
+     *
+     * @param produto o produto
+     */
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    /**
      * Retorna a quantidade vendida.
      *
      * @return a quantidade

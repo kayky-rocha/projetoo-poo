@@ -229,6 +229,15 @@ public class Catraca {
     }
 
     /**
+     * Troca a lista de registros pela que foi carregada do JSON.
+     *
+     * @param lista registros carregados
+     */
+    public void restaurarRegistros(ArrayList<RegistroCatraca> lista) {
+        registros = lista;
+    }
+
+    /**
      * Retorna a catraca em texto.
      *
      * @return o objeto em texto

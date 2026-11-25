@@ -69,7 +69,7 @@ public class Agenda {
     public boolean temVaga(Aula aula, LocalDate data) {
         int ocupadas = 0;
         for (Agendamento a : agendamentos) {
-            if (a.getAula() == aula && a.getData().equals(data)
+            if (a.getAula().getId() == aula.getId() && a.getData().equals(data)
                     && a.getStatus() != StatusAgendamento.CANCELADO) {
                 ocupadas = ocupadas + 1;
             }
@@ -201,6 +201,23 @@ public class Agenda {
         ArrayList<Agendamento> lista = new ArrayList<>(agendamentos);
         Collections.sort(lista, comparador);
         return lista;
+    }
+
+    /**
+     * Troca a lista de agendamentos pela que foi carregada do JSON.
+     * <p>
+     * O próximo id passa a ser o maior id da lista mais 1, para não repetir.
+     *
+     * @param lista agendamentos carregados
+     */
+    public void restaurar(ArrayList<Agendamento> lista) {
+        agendamentos = lista;
+        proximoId = 1;
+        for (Agendamento a : agendamentos) {
+            if (a.getId() >= proximoId) {
+                proximoId = a.getId() + 1;
+            }
+        }
     }
 
     /**

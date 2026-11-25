@@ -76,6 +76,17 @@ public class RegistroCatraca {
     }
 
     /**
+     * Altera o cliente do registro.
+     * <p>
+     * Usado pela persistência em JSON para religar o objeto ao carregar os dados.
+     *
+     * @param cliente o cliente
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    /**
      * Retorna a data e hora da entrada.
      *
      * @return a entrada

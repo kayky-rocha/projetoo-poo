@@ -213,6 +213,17 @@ public abstract class Venda {
     }
 
     /**
+     * Altera o cliente da venda.
+     * <p>
+     * Usado pela persistência em JSON para religar o objeto ao carregar os dados.
+     *
+     * @param cliente o cliente
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    /**
      * Retorna os itens da venda.
      *
      * @return cópia da lista de itens
@@ -228,6 +239,17 @@ public abstract class Venda {
      */
     public Pagamento getPagamento() {
         return pagamento;
+    }
+
+    /**
+     * Altera o pagamento da venda.
+     * <p>
+     * Usado pela persistência em JSON para religar o objeto ao carregar os dados.
+     *
+     * @param pagamento o pagamento
+     */
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
     }
 
     /**

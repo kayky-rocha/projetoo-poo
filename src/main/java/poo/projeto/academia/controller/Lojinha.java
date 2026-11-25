@@ -143,6 +143,26 @@ public class Lojinha {
     }
 
     /**
+     * Lista todas as vendas da lojinha, finalizadas ou não.
+     *
+     * @return cópia da lista de vendas
+     */
+    public ArrayList<VendaLojinha> listarVendas() {
+        return new ArrayList<>(vendas);
+    }
+
+    /**
+     * Troca os produtos e as vendas pelos que foram carregados do JSON.
+     *
+     * @param listaProdutos produtos carregados, com o estoque de cada um
+     * @param listaVendas   vendas carregadas
+     */
+    public void restaurar(ArrayList<ProdutoLoja> listaProdutos, ArrayList<VendaLojinha> listaVendas) {
+        produtos = listaProdutos;
+        vendas = listaVendas;
+    }
+
+    /**
      * Retorna a lojinha em texto.
      *
      * @return quantidade de produtos e de vendas

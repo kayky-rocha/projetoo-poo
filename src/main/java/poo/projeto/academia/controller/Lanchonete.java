@@ -112,6 +112,26 @@ public class Lanchonete {
     }
 
     /**
+     * Lista todos os pedidos da lanchonete, finalizados ou não.
+     *
+     * @return cópia da lista de pedidos
+     */
+    public ArrayList<VendaLanchonete> listarPedidos() {
+        return new ArrayList<>(vendas);
+    }
+
+    /**
+     * Troca o cardápio e os pedidos pelos que foram carregados do JSON.
+     *
+     * @param listaCardapio itens do cardápio carregados
+     * @param listaPedidos  pedidos carregados
+     */
+    public void restaurar(ArrayList<ItemCardapio> listaCardapio, ArrayList<VendaLanchonete> listaPedidos) {
+        cardapio = listaCardapio;
+        vendas = listaPedidos;
+    }
+
+    /**
      * Retorna a lanchonete em texto.
      *
      * @return quantidade de itens no cardápio e de pedidos

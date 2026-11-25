@@ -168,6 +168,17 @@ public class Agendamento {
     }
 
     /**
+     * Altera o cliente do agendamento.
+     * <p>
+     * Usado pela persistência em JSON para religar o objeto ao carregar os dados.
+     *
+     * @param cliente o cliente
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    /**
      * Retorna a aula agendada.
      *
      * @return a aula
@@ -228,6 +239,17 @@ public class Agendamento {
      */
     public Pagamento getPagamento() {
         return pagamento;
+    }
+
+    /**
+     * Altera o pagamento da aula.
+     * <p>
+     * Usado pela persistência em JSON para religar o objeto ao carregar os dados.
+     *
+     * @param pagamento o pagamento
+     */
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
     }
 
     /**

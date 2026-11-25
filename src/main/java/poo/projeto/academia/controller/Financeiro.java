@@ -195,6 +195,33 @@ public class Financeiro {
     }
 
     /**
+     * Troca os pagamentos e as despesas pelos que foram carregados do JSON.
+     * <p>
+     * Os próximos ids passam a ser o maior id de cada lista mais 1, para não repetir.
+     *
+     * @param listaPagamentos pagamentos carregados
+     * @param listaDespesas   despesas carregadas
+     */
+    public void restaurar(ArrayList<Pagamento> listaPagamentos, ArrayList<Despesa> listaDespesas) {
+        pagamentos = listaPagamentos;
+        despesas = listaDespesas;
+
+        proximoId = 1;
+        for (Pagamento p : pagamentos) {
+            if (p.getId() >= proximoId) {
+                proximoId = p.getId() + 1;
+            }
+        }
+
+        proximoIdDespesa = 1;
+        for (Despesa d : despesas) {
+            if (d.getId() >= proximoIdDespesa) {
+                proximoIdDespesa = d.getId() + 1;
+            }
+        }
+    }
+
+    /**
      * Retorna o financeiro em texto.
      *
      * @return quantidade de pagamentos e de despesas

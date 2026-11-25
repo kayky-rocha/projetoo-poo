@@ -26,8 +26,13 @@ public class Extrato {
     /** Data e hora da compra. */
     private LocalDateTime data;
 
-    /** Cliente da compra; {@code null} na venda de balcão. */
-    private Cliente cliente;
+    /**
+     * Cliente da compra; {@code null} na venda de balcão.
+     * <p>
+     * É {@code transient} para não ser salvo no JSON: o cliente já guarda a
+     * lista de extratos, e salvar os dois lados criaria uma referência circular.
+     */
+    private transient Cliente cliente;
 
     /** O que foi comprado, uma linha por item. */
     private String descricao;
@@ -89,6 +94,17 @@ public class Extrato {
      */
     public Cliente getCliente() {
         return cliente;
+    }
+
+    /**
+     * Altera o cliente do extrato.
+     * <p>
+     * Usado pela persistência em JSON para religar o objeto ao carregar os dados.
+     *
+     * @param cliente o cliente
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     /**

@@ -19,8 +19,13 @@ public class Pagamento {
     /** Identificador único do pagamento. É definido pelo Financeiro ao registrar. */
     private int id;
 
-    /** Cliente que realizou o pagamento. */
-    private Cliente cliente;
+    /**
+     * Cliente que realizou o pagamento.
+     * <p>
+     * É {@code transient} para não ser salvo no JSON: o cliente já guarda a
+     * lista de pagamentos, e salvar os dois lados criaria uma referência circular.
+     */
+    private transient Cliente cliente;
 
     /** Forma de pagamento utilizada. */
     private TipoPagamento tipoPagamento;
@@ -94,6 +99,17 @@ public class Pagamento {
      */
     public Cliente getCliente() {
         return cliente;
+    }
+
+    /**
+     * Altera o cliente do pagamento.
+     * <p>
+     * Usado pela persistência em JSON para religar o objeto ao carregar os dados.
+     *
+     * @param cliente o cliente
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     /**

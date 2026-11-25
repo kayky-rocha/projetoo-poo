@@ -166,6 +166,23 @@ public class GerenciarFuncionarios {
     }
 
     /**
+     * Troca a lista de funcionários pela que foi carregada do JSON.
+     * <p>
+     * O próximo id passa a ser o maior id da lista mais 1, para não repetir.
+     *
+     * @param lista funcionários e administradores carregados
+     */
+    public void restaurar(ArrayList<Funcionario> lista) {
+        funcionarios = lista;
+        proximoId = 1;
+        for (Funcionario f : funcionarios) {
+            if (f.getId() >= proximoId) {
+                proximoId = f.getId() + 1;
+            }
+        }
+    }
+
+    /**
      * Retorna o cadastro de funcionários em texto.
      *
      * @return o objeto em texto
