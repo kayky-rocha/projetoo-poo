@@ -1,6 +1,7 @@
 package poo.projeto.academia.model;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
 import poo.projeto.academia.Sistema;
 import poo.projeto.academia.enums.OrigemPagamento;
 import poo.projeto.academia.enums.TipoPlano;
@@ -29,6 +30,12 @@ public class Cliente extends Pessoa {
 
     /** Extratos das compras do cliente (loja, lanchonete e agendamentos). */
     private ArrayList<Extrato> extratos = new ArrayList<>();
+
+    /** Ids das notas fiscais do cliente; as notas ficam no Financeiro. */
+    private ArrayList<Integer> idsNotas = new ArrayList<>();
+
+    /** Indica se a matrícula está ativa. */
+    private boolean ativo = true;
 
     /**
      * Cria um cliente com dados pessoais, identificador e plano.
@@ -150,6 +157,79 @@ public class Cliente extends Pessoa {
     }
 
     /**
+     * Guarda o id de uma nota fiscal do cliente.
+     *
+     * @param idNota id da nota
+     */
+    public void adicionarNota(int idNota){
+        idsNotas.add(idNota);
+    }
+
+    /**
+     * Retorna os ids das notas fiscais do cliente.
+     *
+     * @return cópia da lista de ids
+     */
+    public ArrayList<Integer> getIdsNotas(){
+        return new ArrayList<>(idsNotas);
+    }
+
+    /**
+     * Indica se a matrícula do cliente está ativa.
+     *
+     * @return {@code true} se estiver ativa
+     */
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    /**
+     * Verifica se o cliente mensalista está com a mensalidade vencida.
+     * <p>
+     * Há pendência quando o plano é mensal e não existe mensalidade paga,
+     * ou quando o vencimento da última já passou.
+     *
+     * @param hoje data usada na comparação
+     * @return {@code true} se houver pendência
+     * @throws IllegalArgumentException se a data for nula
+     */
+    public boolean temMensalidadePendente(LocalDate hoje) {
+        if (hoje == null) {
+            throw new IllegalArgumentException("Data não pode ser nula.");
+        }
+        if (plano != TipoPlano.MENSALIDADE) {
+            return false;
+        }
+        Pagamento ultimo = ultimoPagamento(OrigemPagamento.MENSALIDADE);
+        if (ultimo == null) {
+            return true;
+        }
+        return ultimo.calcularVencimento().isBefore(hoje);
+    }
+
+    /**
+     * Cancela a matrícula do cliente.
+     * <p>
+     * O cadastro continua guardado, só deixa de estar ativo.
+     *
+     * @param hoje data usada para verificar a pendência
+     * @throws IllegalArgumentException se houver mensalidade pendente
+     */
+    public void cancelarMatricula(LocalDate hoje) {
+        if (temMensalidadePendente(hoje)) {
+            throw new IllegalArgumentException("Quite as pendências antes de cancelar a matrícula.");
+        }
+        ativo = false;
+    }
+
+    /**
+     * Reativa a matrícula de um cliente que voltou.
+     */
+    public void reativarMatricula() {
+        ativo = true;
+    }
+
+    /**
      * Retorna o cliente em texto, com os dados pessoais herdados de Pessoa.
      *
      * @return o objeto em texto
@@ -157,6 +237,8 @@ public class Cliente extends Pessoa {
     @Override
     public String toString() {
         return "Cliente[id=" + id + ", plano=" + plano + ", " + super.toString()
-                + ", pagamentos=" + pagamentos.size() + ", extratos=" + extratos.size() + "]";
+                + ", pagamentos=" + pagamentos.size() + ", extratos=" + extratos.size()
+                + ", pagamentos=" + pagamentos.size() + ", extratos=" + extratos.size()
+                + ", notas=" + idsNotas.size() + ", ativo=" + ativo + "]";
     }
 }
