@@ -19,6 +19,7 @@ import poo.projeto.academia.model.ProdutoLoja;
 import poo.projeto.academia.model.RegistroCatraca;
 import poo.projeto.academia.model.VendaLanchonete;
 import poo.projeto.academia.model.VendaLojinha;
+import poo.projeto.academia.model.NotaFiscal;
 
 /**
  * Salva e carrega todos os dados do sistema em arquivos JSON.
@@ -26,7 +27,7 @@ import poo.projeto.academia.model.VendaLojinha;
  * Cada tipo de dado vai para um arquivo próprio dentro da pasta escolhida:
  * clientes, funcionários, administradores, agendamentos, registros da catraca,
  * produtos (com o estoque), cardápio, vendas da lojinha, pedidos da lanchonete,
- * pagamentos e despesas. Funcionários e administradores ficam em arquivos
+ * pagamentos, despesas e notas fiscais. Funcionários e administradores ficam em arquivos
  * separados para o administrador continuar sendo administrador ao carregar.
  * <p>
  * Ao carregar, o JSON cria cópias separadas dos objetos (por exemplo, o
@@ -97,6 +98,7 @@ public class PersistenciaSistema {
         repositorio.salvar(caminho("vendas-lanchonete.json"), sistema.getLanchonete().listarPedidos());
         repositorio.salvar(caminho("pagamentos.json"), sistema.getFinanceiro().listarPagamentos());
         repositorio.salvar(caminho("despesas.json"), sistema.getFinanceiro().listarDespesas());
+        repositorio.salvar(caminho("notas.json"), sistema.getFinanceiro().listarNotas());
     }
 
     /**
@@ -144,6 +146,9 @@ public class PersistenciaSistema {
         }
         ArrayList<Despesa> despesas = carregarLista("despesas.json", tipoDespesas);
         sistema.getFinanceiro().restaurar(pagamentos, despesas);
+        Type tipoNotas = new TypeToken<ArrayList<NotaFiscal>>() { }.getType();
+        ArrayList<NotaFiscal> notas = carregarLista("notas.json", tipoNotas);
+        sistema.getFinanceiro().restaurarNotas(notas);
 
         // 4. Agendamentos, religados ao cliente e ao pagamento
         Type tipoAgendamentos = new TypeToken<ArrayList<Agendamento>>() { }.getType();
