@@ -15,6 +15,12 @@ Sistema para gerenciamento de uma academia fictícia em Milho Verde-MG, com 4 sa
 - Controle de diárias e mensalidades
 - Gestão de funcionários e administradores
 - Lançamento de despesas e geração de balanço mensal
+- Catraca de entrada e saída, com cadeia de validadores (cadastro, mensalidade, diária e aula)
+- Lojinha e lanchonete, com controle de estoque e relatórios de vendas
+- Financeiro, com notas fiscais, cancelamento de aula (retenção de 50%) e balanço mensal
+- Cancelamento de matrícula, mantendo o cadastro do cliente
+- Persistência em JSON (Gson)
+- Comparators, Iterator e busca (`encontrar` e `binarySearch`)
 
 ## Tecnologias
 - Java 17
@@ -36,7 +42,7 @@ src/main/java/poo/projeto/academia/
 
 
 ## Status
-Em desenvolvimento — fase de modelagem das classes de domínio.
+Entrega final concluída. O `Main` executa os testes das questões 18 a 21 (classe `Testes`) e os testes das demais áreas (classe `TestesGerais`).
 
 ## Documentação
 Casos de uso, diagramas de sequência, classes e estados disponíveis na pasta `docs/` (ou onde vocês guardarem os PDFs/LaTeX).

@@ -14,6 +14,7 @@ build/
 dist/
 nbdist/
 .nb-gradle/
+nbactions.xml
 
 # IntelliJ
 .idea/
