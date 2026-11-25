@@ -32,16 +32,15 @@ public class Main {
     }
 
     /**
-     * Inicia a aplicação. Por enquanto, testa a catraca em seis cenários.
+     * Inicia a aplicação. Chama os testes das questões 18 a 21, os testes gerais e a catraca em seis cenários.
      *
      * @param args argumentos de linha de comando (não utilizados)
      */
     public static void main(String[] args) {
-
         Testes.questao18();
         Testes.questao19();
         Testes.questao20();
-        // Testes.questao21();
+        Testes.questao21();
         TestesGerais.executarTodos();
 
         LocalDate hoje = LocalDate.now();
