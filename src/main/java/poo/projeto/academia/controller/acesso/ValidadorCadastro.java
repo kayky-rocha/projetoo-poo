@@ -4,7 +4,7 @@ import poo.projeto.academia.controller.GerenciarClientes;
 import poo.projeto.academia.model.Cliente;
 
 /**
- * Elo da catraca que confere se o cliente está cadastrado na academia.
+ * Elo da catraca que confere se o cliente está cadastrado e com a matrícula ativa.
  *
  * @author Kayky Francisco Rodrigues da Rocha
  * @author Aaron Araujo Agapito Guedes
@@ -26,7 +26,7 @@ public class ValidadorCadastro extends ValidadorAcesso {
     }
 
     /**
-     * Reprova se o cliente não existir ou não estiver cadastrado.
+     * Reprova se o cliente não existir, não estiver cadastrado ou estiver com a matrícula cancelada.
      *
      * @param solicitacao pedido de acesso
      * @return resultado da verificação de cadastro
@@ -41,6 +41,10 @@ public class ValidadorCadastro extends ValidadorAcesso {
 
         if (gerenciarClientes.buscarCliente(cliente.getId()) == null) {
             return new ResultadoAcesso(false, "Cliente não cadastrado.");
+        }
+
+        if (cliente.isAtivo() == false) {
+            return new ResultadoAcesso(false, "Matrícula cancelada.");
         }
 
         return new ResultadoAcesso(true, "Acesso liberado.");
