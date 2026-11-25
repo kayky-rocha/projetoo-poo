@@ -238,7 +238,6 @@ public class Cliente extends Pessoa {
     public String toString() {
         return "Cliente[id=" + id + ", plano=" + plano + ", " + super.toString()
                 + ", pagamentos=" + pagamentos.size() + ", extratos=" + extratos.size()
-                + ", pagamentos=" + pagamentos.size() + ", extratos=" + extratos.size()
                 + ", notas=" + idsNotas.size() + ", ativo=" + ativo + "]";
     }
 }
