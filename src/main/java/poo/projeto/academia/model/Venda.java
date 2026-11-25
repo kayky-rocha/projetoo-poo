@@ -155,6 +155,7 @@ public abstract class Venda {
         extrato = new Extrato(data, cliente, montarDescricao(), total(), forma);
 
         if (cliente != null) {
+            cliente.registrarPagamento(pagamento);
             cliente.adicionarExtrato(extrato);
         }
         return extrato;
