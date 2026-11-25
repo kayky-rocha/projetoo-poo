@@ -7,6 +7,8 @@ import poo.projeto.academia.enums.OrigemPagamento;
 import poo.projeto.academia.model.Balanco;
 import poo.projeto.academia.model.Despesa;
 import poo.projeto.academia.model.Pagamento;
+import poo.projeto.academia.model.Cliente;
+import poo.projeto.academia.model.NotaFiscal;
 
 /**
  * Controle financeiro da academia.
@@ -42,6 +44,9 @@ public class Financeiro {
     /** Próximo identificador de despesa. */
     private int proximoIdDespesa = 1;
 
+    /** Todas as notas fiscais emitidas. */
+    private ArrayList<NotaFiscal> notas = new ArrayList<>();
+
     /**
      * Registra um pagamento e gera o identificador dele.
      *
@@ -71,6 +76,72 @@ public class Financeiro {
             }
         }
         return null;
+    }
+
+    /**
+     * Emite a nota fiscal de um pagamento já registrado.
+     * <p>
+     * Deve ser chamado depois de {@link #registrarPagamento(Pagamento)},
+     * porque o id do pagamento só existe depois do registro.
+     *
+     * @param pagamento pagamento da nota
+     * @param cliente   cliente do pagamento, ou {@code null} na venda de balcão
+     * @return o identificador da nota criada
+     * @throws IllegalArgumentException se o pagamento for nulo
+     */
+    public int emitirNota(Pagamento pagamento, Cliente cliente){
+        if (pagamento == null){
+            throw new IllegalArgumentException("Pagamento não pode ser nulo.");
+        }
+        int idCliente = 0;
+        if (cliente != null){
+            idCliente = cliente.getId();
+        }
+        NotaFiscal nota = new NotaFiscal(pagamento.getId(), idCliente, pagamento.getDataPagamento(), pagamento.getValorPago(), 
+        pagamento.getOrigem());
+        notas.add(nota);
+        return nota.getId();
+    }
+
+    /**
+     * Busca uma nota fiscal pelo identificador.
+     *
+     * @param id identificador da nota
+     * @return a nota, ou {@code null} se não existir
+     */
+    public NotaFiscal buscarNota(int id){
+        for (NotaFiscal n : notas){
+            if (n.getId() == id){
+                return n;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Lista todas as notas fiscais.
+     *
+     * @return cópia da lista de notas
+     */
+    public ArrayList<NotaFiscal> listarNotas(){
+        return new ArrayList<>(notas);
+    }
+
+    /**
+     * Troca as notas pelas que foram carregadas do JSON e ajusta o contador
+     * de ids para o maior id carregado.
+     *
+     * @param listaNotas notas carregadas
+     */
+    public void restaurarNotas(ArrayList<NotaFiscal> listaNotas){
+        notas = listaNotas;
+        int maior = 0;
+        for (NotaFiscal n : notas){
+            if (n.getId() > maior){
+                maior = n.getId();
+            }
+        }
+        NotaFiscal.atualizarTotalNotas(maior);
     }
 
     /**
@@ -228,6 +299,7 @@ public class Financeiro {
      */
     @Override
     public String toString() {
-        return "Financeiro: " + pagamentos.size() + " pagamento(s), " + despesas.size() + " despesa(s)";
+         return "Financeiro: " + pagamentos.size() + " pagamento(s), " + despesas.size()
+                + " despesa(s), " + notas.size() + " nota(s)";
     }
 }
