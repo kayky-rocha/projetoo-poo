@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import poo.projeto.academia.model.Cliente;
 import poo.projeto.academia.model.Extrato;
+import java.util.Iterator;
 
 /**
  * Gerencia o cadastro de clientes da academia.
@@ -127,6 +128,27 @@ public class GerenciarClientes {
         ArrayList<Cliente> lista = new ArrayList<>(clientes);
         Collections.sort(lista, comparador);
         return lista;
+    }
+
+    /**
+     * Procura um cliente percorrendo a lista com um Iterator.
+     * <p>
+     * Um cliente é o procurado quando o comparador devolve 0 ao compará-lo
+     * com a chave. A lista não precisa estar ordenada.
+     *
+     * @param chave      cliente modelo, com os campos que o comparador usa
+     * @param comparador critério de igualdade
+     * @return o primeiro cliente igual à chave, ou {@code null} se não achar
+     */
+    public Cliente encontrar(Cliente chave, Comparator<Cliente> comparador) {
+        Iterator<Cliente> iterator = clientes.iterator();
+        while (iterator.hasNext()) {
+            Cliente atual = iterator.next();
+            if (comparador.compare(atual, chave) == 0) {
+                return atual;
+            }
+        }
+        return null;
     }
 
     /**
