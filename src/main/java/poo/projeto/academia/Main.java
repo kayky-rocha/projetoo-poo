@@ -37,6 +37,11 @@ public class Main {
      * @param args argumentos de linha de comando (não utilizados)
      */
     public static void main(String[] args) {
+        
+        Testes.questao18();
+        Testes.questao19();
+        Testes.questao20();
+
         LocalDate hoje = LocalDate.now();
 
         GerenciarClientes gerenciarClientes = new GerenciarClientes();
