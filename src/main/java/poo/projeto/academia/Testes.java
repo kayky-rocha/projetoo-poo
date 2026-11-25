@@ -22,6 +22,9 @@ import poo.projeto.academia.model.NotaFiscal;
 import poo.projeto.academia.model.ProdutoLoja;
 import poo.projeto.academia.model.VendaLanchonete;
 import poo.projeto.academia.model.VendaLojinha;
+import poo.projeto.academia.comparator.AgendamentoPorCliente;
+import poo.projeto.academia.comparator.AgendamentoPorData;
+import poo.projeto.academia.comparator.AgendamentoPorHorario;
 
 /**
  * Testes do sistema, um método por questão do enunciado.
@@ -207,10 +210,10 @@ public class Testes {
         Agendamento agGabi = sistema.getAgenda().agendar(gabi, spinning, LocalDate.now());
         sistema.confirmarAgendamento(agGabi.getId(), TipoPagamento.PIX);
         double reembolso = sistema.cancelarAgendamento(agGabi.getId());
-        System.out.println("Gabi cancelou a aula e recebeu R$ " + reembolso);
+        System.out.println("Gabi cancelou a aula e recebeu R$ " + String.format("%.2f", reembolso));
         imprimirUltimaNota(sistema, gabi);
         sistema.cancelarMatricula(gabi);
-        System.out.println("Gabi cancelou a aula e recebeu R$ " + String.format("%.2f", reembolso));
+        System.out.println("Gabi cancelou a matrícula. Ativa? " + gabi.isAtivo());
 
         // 8. Hugo: compra na lojinha (baixa no estoque) e na lanchonete. Termina com a nota.
         System.out.println("Estoque do whey antes: " + whey.getEstoque());
@@ -263,5 +266,75 @@ public class Testes {
         ArrayList<Integer> ids = cliente.getIdsNotas();
         NotaFiscal nota = sistema.getFinanceiro().buscarNota(ids.get(ids.size() - 1));
         System.out.println("  Nota de " + cliente.getNome() + ": " + nota);
+    }
+
+    /**
+     * Gerenciar clientes: editar e remover, com os casos de erro.
+     */
+    public static void testarClientes() {
+        // Clientes {
+        System.out.println("\n=== CLIENTES: EDITAR E REMOVER ===");
+        Sistema sistema = new Sistema();
+        sistema.getGerenciarFuncionarios().cadastrarFuncionario(new Administrador("Marta", "900", "3390",
+                "marta@email.com", "Rua M", 0, "Gerente", 3000.0, "marta", "123", "adm123"));
+        sistema.login("marta", "123");
+
+        Cliente lia = new Cliente("Lia", "701", "3701", "lia@email.com", "Rua L", 0, TipoPlano.DIARIA);
+        Cliente leo = new Cliente("Leo", "702", "3702", "leo@email.com", "Rua O", 0, TipoPlano.DIARIA);
+        sistema.cadastrarCliente(lia);
+        sistema.cadastrarCliente(leo);
+        System.out.println("Cadastrados: " + sistema.getGerenciarClientes().listarClientes().size());
+
+        try {
+            sistema.cadastrarCliente(new Cliente("Outra", "701", "0", "o@email.com", "Rua", 0, TipoPlano.DIARIA));
+        } catch (IllegalArgumentException e) {
+            System.out.println("CPF repetido: " + e.getMessage());
+        }
+
+        Cliente novosDados = new Cliente("Lia Souza", "701", "3799", "lia@email.com", "Rua L2", 0, TipoPlano.MENSALIDADE);
+        System.out.println("Editou a Lia? " + sistema.editarCliente(lia.getId(), novosDados));
+        System.out.println("Depois de editar: " + lia.getNome() + ", " + lia.getTelefone() + ", " + lia.getPlano());
+        System.out.println("Editar id que não existe: " + sistema.editarCliente(99, novosDados));
+
+        System.out.println("Removeu o Leo? " + sistema.removerCliente(leo.getId()));
+        System.out.println("Remover de novo: " + sistema.removerCliente(leo.getId()));
+        System.out.println("Clientes que sobraram (esperado 1): " + sistema.getGerenciarClientes().listarClientes().size());
+        // }
+    }
+
+    /**
+     * Comparators de Agendamento: ordena a mesma lista por data, por horário e por cliente.
+     */
+    public static void testarComparatorsAgendamento() {
+        // Comparators de Agendamento {
+        System.out.println("\n=== COMPARATORS DE AGENDAMENTO ===");
+        Sistema sistema = new Sistema();
+        Cliente carla = new Cliente("Carla", "801", "3801", "carla@email.com", "Rua C", 0, TipoPlano.DIARIA);
+        Cliente ana = new Cliente("Ana", "802", "3802", "ana@email.com", "Rua A", 0, TipoPlano.DIARIA);
+        Cliente bruno = new Cliente("Bruno", "803", "3803", "bruno@email.com", "Rua B", 0, TipoPlano.DIARIA);
+        sistema.getGerenciarClientes().cadastrarCliente(carla);
+        sistema.getGerenciarClientes().cadastrarCliente(ana);
+        sistema.getGerenciarClientes().cadastrarCliente(bruno);
+        Aula manha = new Aula(1, "Pilates", Sistema.buscarSala(TipoSala.PILATES), null, LocalTime.of(7, 0), 40.0, 20.0);
+        Aula tarde = new Aula(2, "Spinning", Sistema.buscarSala(TipoSala.SPINNING), null, LocalTime.of(15, 30), 30.0, 150.0);
+        Aula noite = new Aula(3, "Fit Dance", Sistema.buscarSala(TipoSala.FIT_DANCE), null, LocalTime.of(19, 0), 30.0, 150.0);
+        LocalDate hoje = LocalDate.now();
+        sistema.getAgenda().agendar(carla, noite, hoje.plusDays(1));
+        sistema.getAgenda().agendar(ana, manha, hoje.plusDays(3));
+        sistema.getAgenda().agendar(bruno, tarde, hoje.plusDays(2));
+
+        System.out.println("Por data:");
+        for (Agendamento a : sistema.getAgenda().listarAgendamentos(new AgendamentoPorData())) {
+            System.out.println("  " + a.getData() + " | " + a.getAula().getHorario() + " | " + a.getCliente().getNome());
+        }
+        System.out.println("Por horário:");
+        for (Agendamento a : sistema.getAgenda().listarAgendamentos(new AgendamentoPorHorario())) {
+            System.out.println("  " + a.getAula().getHorario() + " | " + a.getData() + " | " + a.getCliente().getNome());
+        }
+        System.out.println("Por cliente:");
+        for (Agendamento a : sistema.getAgenda().listarAgendamentos(new AgendamentoPorCliente())) {
+            System.out.println("  " + a.getCliente().getNome() + " | " + a.getData() + " | " + a.getAula().getHorario());
+        }
+        // }
     }
 }

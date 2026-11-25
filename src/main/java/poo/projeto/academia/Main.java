@@ -42,6 +42,8 @@ public class Main {
         Testes.questao20();
         Testes.questao21();
         TestesGerais.executarTodos();
+        Testes.testarClientes();
+        Testes.testarComparatorsAgendamento();
 
         LocalDate hoje = LocalDate.now();
 
