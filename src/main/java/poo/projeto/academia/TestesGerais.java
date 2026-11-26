@@ -382,30 +382,42 @@ public class TestesGerais {
         sistema.registrarMensalidade(fia, TipoPagamento.PIX);
         Aula spinning = new Aula(2, "Spinning", Sistema.buscarSala(TipoSala.SPINNING), null,
                 LocalTime.of(7, 0), 40.0, 20.0);
-        Agendamento aula = sistema.getAgenda().agendar(fia, spinning, hoje.plusDays(1));
+        Agendamento aula = sistema.getAgenda().agendar(fia, spinning, hoje.plusDays(5));
         sistema.confirmarAgendamento(aula.getId(), TipoPagamento.CREDITO);
         double reembolso = sistema.cancelarAgendamento(aula.getId());
         System.out.println("Reembolso do cancelamento (esperado 10.0, metade da aula de 20.0): " + reembolso);
+        Agendamento tardia = sistema.getAgenda().agendar(edu, spinning, hoje.plusDays(1));
+        sistema.confirmarAgendamento(tardia.getId(), TipoPagamento.DEBITO);
+        double semReembolso = sistema.cancelarAgendamento(tardia.getId());
+        System.out.println("Cancelamento com menos de 3 dias (esperado 0.0): " + semReembolso);
 
         // 2. Buscar pagamento e somar
         System.out.println("Pagamento da diária: " + financeiro.buscarPagamento(diaria.getId()));
         ArrayList<Pagamento> doDia = financeiro.relatorioVendasDia(hoje);
-        System.out.println("Pagamentos de hoje (esperado 4): " + doDia.size() + ", total líquido (esperado 190.0 = 30 + 150 + 20 - 10): " + financeiro.somar(doDia));
-        System.out.println("Pagamentos do mês: "
+        System.out.println("Pagamentos de hoje (esperado 5): "
+        + doDia.size() + ", total líquido (esperado 230.0 = 30 + 150 + 20 - 10 + 40): " + financeiro.somar(doDia));
+        System.out.println("Pagamentos do mês: " 
                 + financeiro.relatorioVendasMes(hoje.getYear(), hoje.getMonthValue()).size());
-        System.out.println("Total de AULA no mês (esperado 20.0): "
+        System.out.println("Total de AULA no mês (esperado 60.0): "
                 + financeiro.totalPorOrigem(OrigemPagamento.AULA, hoje.getYear(), hoje.getMonthValue()));
         System.out.println("Total de CANCELAMENTO no mês (esperado -10.0): "
                 + financeiro.totalPorOrigem(OrigemPagamento.CANCELAMENTO, hoje.getYear(), hoje.getMonthValue()));
 
         // 3. Notas fiscais: uma por pagamento
-        System.out.println("Notas emitidas (esperado 4, uma por pagamento): " + financeiro.listarNotas().size());
+        System.out.println("Notas emitidas (esperado 5, uma por pagamento): " + financeiro.listarNotas().size());
         for (int id : fia.getIdsNotas()) {
             NotaFiscal nota = financeiro.buscarNota(id);
             System.out.println("  Nota da Fia: " + nota);
         }
 
-        // 4. Despesas
+        // 4. Despesas (só o administrador)
+        try {
+        sistema.lancarDespesa("Conta de luz", 400.0);
+        } catch (Exception e) {
+        System.out.println("Paulo tentou lançar despesa: " + e.getMessage());
+        }
+        sistema.logout();
+        sistema.login("marta", "123");
         Despesa luz = sistema.lancarDespesa("Conta de luz", 400.0);
         sistema.lancarDespesa("Material de limpeza", 80.0);
         System.out.println("Despesa lançada: " + luz);

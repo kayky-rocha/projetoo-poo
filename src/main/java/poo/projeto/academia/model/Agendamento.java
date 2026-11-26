@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import poo.projeto.academia.enums.OrigemPagamento;
 import poo.projeto.academia.enums.StatusAgendamento;
 import poo.projeto.academia.enums.TipoPagamento;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Agendamento de um cliente em uma aula, em uma data.
@@ -21,6 +22,9 @@ public class Agendamento {
 
     /** Prazo, em dias úteis, para confirmar um agendamento preliminar. */
     private static final int PRAZO_DIAS_UTEIS = 5;
+
+    /** Antecedência mínima, em dias, para o cancelamento devolver metade do valor. */
+    private static final int PRAZO_REEMBOLSO_DIAS = 3;
 
     /** Identificador único do agendamento. */
     private int id;
@@ -85,9 +89,9 @@ public class Agendamento {
      * Cancela o agendamento e calcula o reembolso.
      * <p>
      * O preliminar ainda não foi pago, então é cancelado sem reembolso.
-     * O confirmado devolve 50% do valor, e a academia retém os outros 50%.
+     * O confirmado devolve 50% do valor se faltarem pelo menos 3 dias para a aula; com menos de 3 dias, não devolve nada.
      *
-     * @return valor a devolver ao cliente; 0 se era preliminar ou se não pôde cancelar
+     * @return 0 se era preliminar, se faltam menos de 3 dias ou se não pôde cancelar
      */
     public double cancelar() {
         if (status == StatusAgendamento.CANCELADO || status == StatusAgendamento.REALIZADO) { 
@@ -100,6 +104,9 @@ public class Agendamento {
         }
 
         status = StatusAgendamento.CANCELADO;
+        if (ChronoUnit.DAYS.between(LocalDate.now(), data) < PRAZO_REEMBOLSO_DIAS) {
+        return 0;
+        }
         return calcularReembolso();
     }
 

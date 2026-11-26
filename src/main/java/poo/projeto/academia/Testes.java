@@ -207,7 +207,7 @@ public class Testes {
 
         // 7. Gabi: confirma a aula, cancela (devolve 50%) e cancela a matrícula.
         sistema.registrarMensalidade(gabi, TipoPagamento.PIX);
-        Agendamento agGabi = sistema.getAgenda().agendar(gabi, spinning, LocalDate.now());
+        Agendamento agGabi = sistema.getAgenda().agendar(gabi, spinning, LocalDate.now().plusDays(5));
         sistema.confirmarAgendamento(agGabi.getId(), TipoPagamento.PIX);
         double reembolso = sistema.cancelarAgendamento(agGabi.getId());
         System.out.println("Gabi cancelou a aula e recebeu R$ " + String.format("%.2f", reembolso));

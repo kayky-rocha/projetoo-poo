@@ -35,7 +35,7 @@ import poo.projeto.academia.model.Venda;
  * financeiro: diárias, mensalidades e vendas.
  * <p>
  * O uso é feito por colaboradores e administradores, com login. Qualquer
- * funcionário logado atende clientes, agenda aulas, vende e lança despesas.
+ * funcionário logado atende clientes, agenda aulas e vende.
  * Só o administrador cadastra, edita e remove funcionários, altera a senha
  * de um administrador e gera o balanço mensal.
  * <p>
@@ -260,15 +260,15 @@ public class Sistema {
     }
 
     /**
-     * Lança uma despesa. Qualquer funcionário logado pode.
+     * Lança uma despesa. Somente o administrador logado pode.
      *
      * @param descricao descrição do gasto
      * @param valor     valor gasto
      * @return a despesa criada, com a data de hoje
-     * @throws IllegalStateException se ninguém fez login
+     * @throws IllegalStateException se ninguém fez login ou se não for administrador
      */
     public Despesa lancarDespesa(String descricao, double valor) {
-        exigirLogin();
+        exigirAdministrador();
         return financeiro.registrarDespesa(descricao, valor, LocalDate.now());
     }
 
