@@ -37,6 +37,7 @@ public class Main {
      * @param args argumentos de linha de comando (não utilizados)
      */
     public static void main(String[] args) {
+        // Questão 18: a explicação do Iterator e do foreach está no Javadoc de Testes.questao18()
         Testes.questao18();
         Testes.questao19();
         Testes.questao20();

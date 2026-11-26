@@ -52,11 +52,28 @@ public class Testes {
         return g;
     }
 
-    /**
+     /**
      * Questão 18: Iterator e foreach.
      * <p>
-     * O foreach é a forma curta do mesmo Iterator: o compilador troca o
-     * foreach por um while com hasNext e next.
+     * <b>Como o Iterator funciona.</b> O {@code ArrayList} tem o método
+     * {@code iterator()}, que devolve um objeto {@code Iterator<Cliente>}.
+     * Esse objeto guarda a posição atual da lista, que começa antes do
+     * primeiro elemento. A cada volta do {@code while}:
+     * <ul>
+     *   <li>{@code hasNext()} pergunta se ainda existe um próximo elemento
+     *       e devolve {@code true} ou {@code false};</li>
+     *   <li>{@code next()} devolve o elemento da posição seguinte e avança
+     *       o iterator.</li>
+     * </ul>
+     * Quando {@code hasNext()} devolve {@code false}, o laço termina. A lista
+     * não é alterada, o iterator só a percorre, um elemento por vez.
+     * <p>
+     * <b>Relação com o foreach.</b> O {@code for (Cliente c : lista)} é a
+     * forma curta desse mesmo código. Para qualquer classe que implementa
+     * {@code Iterable} (como o ArrayList), o compilador troca o foreach por
+     * um {@code while} com {@code iterator()}, {@code hasNext()} e
+     * {@code next()}. A saída dos dois é igual: o foreach só esconde o
+     * iterator.
      */
     public static void questao18() {
         // Questao 18 {
